@@ -53,42 +53,44 @@ Ah, c&amp;rsquo;est la vie.&lt;/li&gt;
 
 &lt;p&gt;Reading the Keystore is actually a pretty straight-forward process:&lt;/p&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #202020&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #999999; font-style: italic&#34;&gt;// import a ton of stuff&lt;/span&gt;
-&lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color: #447fcf; text-decoration: underline&#34;&gt;com.google.common.collect.Lists&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color: #447fcf; text-decoration: underline&#34;&gt;com.google.common.collect.Maps&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color: #447fcf; text-decoration: underline&#34;&gt;org.joda.time.DateTime&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color: #447fcf; text-decoration: underline&#34;&gt;org.joda.time.Days&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;;&lt;/span&gt;
+&lt;pre&gt;
+&lt;code class=&#34;language-java&#34;&gt;
+// import a ton of stuff
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 
-&lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color: #447fcf; text-decoration: underline&#34;&gt;java.io.FileInputStream&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color: #447fcf; text-decoration: underline&#34;&gt;java.io.IOException&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color: #447fcf; text-decoration: underline&#34;&gt;java.security.KeyStore&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color: #447fcf; text-decoration: underline&#34;&gt;java.security.KeyStoreException&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color: #447fcf; text-decoration: underline&#34;&gt;java.security.NoSuchAlgorithmException&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color: #447fcf; text-decoration: underline&#34;&gt;java.security.UnrecoverableEntryException&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color: #447fcf; text-decoration: underline&#34;&gt;java.security.cert.Certificate&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color: #447fcf; text-decoration: underline&#34;&gt;java.security.cert.CertificateException&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color: #447fcf; text-decoration: underline&#34;&gt;java.security.cert.X509Certificate&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color: #447fcf; text-decoration: underline&#34;&gt;java.util.*&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;;&lt;/span&gt;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableEntryException;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+import java.util.*;
 
-&lt;span style=&#34;color: #999999; font-style: italic&#34;&gt;// ... more code, some method somewhere&lt;/span&gt;
+// ... more code, some method somewhere
 
-&lt;span style=&#34;color: #d0d0d0&#34;&gt;KeyStore&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;ks&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;KeyStore.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;getInstance&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;(KeyStore.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;getDefaultType&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;());&lt;/span&gt;
-&lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;char&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;[]&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;pass&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #ed9d13&#34;&gt;&amp;quot;changeit&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #999999; font-style: italic&#34;&gt;// or whatever&lt;/span&gt;
+KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
+char[] pass = &#34;changeit&#34;; // or whatever
 
-&lt;span style=&#34;color: #d0d0d0&#34;&gt;java.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;io&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;InputStream&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;fis&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;try&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color: #d0d0d0&#34;&gt;fis&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;Reader.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;getClassLoader&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;().&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;getResourceAsStream&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;(file_path);&lt;/span&gt;
-    &lt;span style=&#34;color: #d0d0d0&#34;&gt;ks.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;load&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;(fis,&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;pass);&lt;/span&gt;
+java.io.InputStream fis = null;
+try {
+    fis = Reader.class.getClassLoader().getResourceAsStream(file_path);
+    ks.load(fis, pass);
 
-    &lt;span style=&#34;color: #999999; font-style: italic&#34;&gt;// Get Certificate listing&lt;/span&gt;
+    // Get Certificate listing
 
-&lt;span style=&#34;color: #d0d0d0&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;finally&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;(fis&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color: #d0d0d0&#34;&gt;fis.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;close&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;();&lt;/span&gt;
-    &lt;span style=&#34;color: #d0d0d0&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color: #d0d0d0&#34;&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+} finally {
+    if (fis != null) {
+        fis.close();
+    }
+}
+&lt;/code&gt;
+&lt;/pre&gt;
 
 &lt;h1 id=&#34;traversing-certificates-and-aliases:ea83c6f13264b77e32b6387eb48f3ca8&#34;&gt;Traversing Certificates and Aliases&lt;/h1&gt;
 
@@ -104,25 +106,27 @@ laudable in and of itself), but we want to be sure we aren&amp;rsquo;t going to 
 fate of thinking &amp;ldquo;well, our server cert passed, but this whole tree of servers&amp;rsquo;
 intermediate certificates expired&amp;rdquo;.&lt;/p&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #202020&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;Map&amp;lt;String,&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;List&amp;lt;Certificate&amp;gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #447fcf&#34;&gt;getCertMap&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;(KeyStore&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;ks)&lt;/span&gt; &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;throws&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;KeyStoreException&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color: #d0d0d0&#34;&gt;Map&amp;lt;String,&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;List&amp;lt;Certificate&amp;gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;cert_map&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;Maps.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;newHashMap&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;();&lt;/span&gt; &lt;span style=&#34;color: #999999; font-style: italic&#34;&gt;// Good &amp;#39;ol Guava&lt;/span&gt;
-    &lt;span style=&#34;color: #999999; font-style: italic&#34;&gt;// Each KeyStore can return an &amp;quot;Enumeration&amp;quot; of aliases&lt;/span&gt;
-    &lt;span style=&#34;color: #d0d0d0&#34;&gt;Enumeration&amp;lt;String&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;aliases&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;ks.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;aliases&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;();&lt;/span&gt;
-    &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;(aliases.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;hasMoreElements&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color: #d0d0d0&#34;&gt;String&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;alias&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;aliases.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;nextElement&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;();&lt;/span&gt;
-        &lt;span style=&#34;color: #d0d0d0&#34;&gt;Certificate[]&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;certs&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;ks.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;getCertificateChain&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;(alias);&lt;/span&gt;
-        &lt;span style=&#34;color: #999999; font-style: italic&#34;&gt;// It&amp;#39;s not a guarantee that you&amp;#39;ll have ANY certificates&lt;/span&gt;
-        &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;(certs&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;null&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;certs.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;length&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #3677a9&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;{&lt;/span&gt;
-            &lt;span style=&#34;color: #d0d0d0&#34;&gt;cert_map.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;put&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;(alias,&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;Lists.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;newArrayList&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;(certs));&lt;/span&gt;
-        &lt;span style=&#34;color: #d0d0d0&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;{&lt;/span&gt;
-            &lt;span style=&#34;color: #d0d0d0&#34;&gt;Certificate&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;cert&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;ks.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;getCertificate&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;(alias);&lt;/span&gt;
-            &lt;span style=&#34;color: #d0d0d0&#34;&gt;cert_map.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;put&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;(alias,&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;Lists.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;newArrayList&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;(cert));&lt;/span&gt;
-        &lt;span style=&#34;color: #d0d0d0&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color: #d0d0d0&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;cert_map;&lt;/span&gt;
-&lt;span style=&#34;color: #d0d0d0&#34;&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;pre&gt;
+&lt;code class=&#34;language-java&#34;&gt;
+private static Map&lt;String, List&lt;Certificate&gt;&gt; getCertMap(KeyStore ks) throws KeyStoreException {
+    Map&lt;String, List&lt;Certificate&gt;&gt; cert_map = Maps.newHashMap(); // Good &#39;ol Guava
+    // Each KeyStore can return an &#34;Enumeration&#34; of aliases
+    Enumeration&lt;String&gt; aliases = ks.aliases();
+    while (aliases.hasMoreElements()) {
+        String alias = aliases.nextElement();
+        Certificate[] certs = ks.getCertificateChain(alias);
+        // It&#39;s not a guarantee that you&#39;ll have ANY certificates
+        if (certs != null &amp;&amp; certs.length &gt; 0) {
+            cert_map.put(alias, Lists.newArrayList(certs));
+        } else {
+            Certificate cert = ks.getCertificate(alias);
+            cert_map.put(alias, Lists.newArrayList(cert));
+        }
+    }
+    return cert_map;
+}
+&lt;/code&gt;
+&lt;/pre&gt;
 
 &lt;h1 id=&#34;filtering:ea83c6f13264b77e32b6387eb48f3ca8&#34;&gt;Filtering&lt;/h1&gt;
 
@@ -130,50 +134,55 @@ intermediate certificates expired&amp;rdquo;.&lt;/p&gt;
 going to expire, it&amp;rsquo;s most likely an &lt;strong&gt;X.509&lt;/strong&gt; certificate, and so we only need
 to be concerned with a subset of certificates.&lt;/p&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #202020&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;    &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;Map&amp;lt;String,&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;List&amp;lt;X509Certificate&amp;gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #447fcf&#34;&gt;filterX509Certs&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;(Map&amp;lt;String,&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;List&amp;lt;Certificate&amp;gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;cert_map)&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color: #d0d0d0&#34;&gt;Map&amp;lt;String,&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;List&amp;lt;X509Certificate&amp;gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;x509_map&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;Maps.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;newHashMap&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;();&lt;/span&gt;
-        &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;(Map.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;Entry&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;&amp;lt;String,&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;List&amp;lt;Certificate&amp;gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;c&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;cert_map.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;entrySet&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;{&lt;/span&gt;
-            &lt;span style=&#34;color: #d0d0d0&#34;&gt;List&amp;lt;X509Certificate&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;certs&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;Lists.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;newArrayListWithCapacity&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;(c.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;getValue&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;().&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;size&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;());&lt;/span&gt;
-            &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;(Certificate&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;cert&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;c.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;getValue&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;{&lt;/span&gt;
-                &lt;span style=&#34;color: #999999; font-style: italic&#34;&gt;// This is where the magic happens...&lt;/span&gt;
-                &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;(cert.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;getType&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;().&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;equals&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #ed9d13&#34;&gt;&amp;quot;X.509&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;{&lt;/span&gt;
-                    &lt;span style=&#34;color: #999999; font-style: italic&#34;&gt;// cast the type to X509Certificate&lt;/span&gt;
-                    &lt;span style=&#34;color: #d0d0d0&#34;&gt;certs.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;add&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;((X509Certificate)&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;cert);&lt;/span&gt;
-                &lt;span style=&#34;color: #d0d0d0&#34;&gt;}&lt;/span&gt;
-            &lt;span style=&#34;color: #d0d0d0&#34;&gt;}&lt;/span&gt;
-            &lt;span style=&#34;color: #d0d0d0&#34;&gt;x509_map.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;put&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;(c.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;getKey&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;(),&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;certs);&lt;/span&gt;
-        &lt;span style=&#34;color: #d0d0d0&#34;&gt;}&lt;/span&gt;
-        &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;x509_map;&lt;/span&gt;
-    &lt;span style=&#34;color: #d0d0d0&#34;&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;pre&gt;
+&lt;code class=&#34;language-java&#34;&gt;
+    private static Map&lt;String, List&lt;X509Certificate&gt;&gt; filterX509Certs(Map&lt;String, List&lt;Certificate&gt;&gt; cert_map) {
+        Map&lt;String, List&lt;X509Certificate&gt;&gt; x509_map = Maps.newHashMap();
+        for (Map.Entry&lt;String, List&lt;Certificate&gt;&gt; c : cert_map.entrySet()) {
+            List&lt;X509Certificate&gt; certs = Lists.newArrayListWithCapacity(c.getValue().size());
+            for (Certificate cert : c.getValue()) {
+                // This is where the magic happens...
+                if (cert.getType().equals(&#34;X.509&#34;)) {
+                    // cast the type to X509Certificate
+                    certs.add((X509Certificate) cert);
+                }
+            }
+            x509_map.put(c.getKey(), certs);
+        }
+        return x509_map;
+    }
+&lt;/code&gt;
+&lt;/pre&gt;
 
 &lt;p&gt;It took a lot longer to figure out that this one little line&lt;/p&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #202020&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;                &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;(cert.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;getType&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;().&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;equals&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #ed9d13&#34;&gt;&amp;quot;X.509&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;{&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;
+&lt;code class=&#34;language-java&#34;&gt;
+                if (cert.getType().equals(&#34;X.509&#34;)) {
+&lt;/code&gt;
+&lt;/pre&gt;
+is where you figure out the type.
 
+# Finding by Date
 
-&lt;p&gt;is where you figure out the type.&lt;/p&gt;
+Now that we have a mapped-listing of X.509 certificates and their chains mapped
+to an alias, we can iterate over them to find by date:
 
-&lt;h1 id=&#34;finding-by-date:ea83c6f13264b77e32b6387eb48f3ca8&#34;&gt;Finding by Date&lt;/h1&gt;
-
-&lt;p&gt;Now that we have a mapped-listing of X.509 certificates and their chains mapped
-to an alias, we can iterate over them to find by date:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34; style=&#34;background: #202020&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;List&amp;lt;X509Certificate&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #447fcf&#34;&gt;filterCertificates&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;(List&amp;lt;X509Certificate&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;certs,&lt;/span&gt; &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;days_threshold)&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color: #d0d0d0&#34;&gt;List&amp;lt;X509Certificate&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;filtered&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;Lists.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;newArrayList&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;();&lt;/span&gt;
-    &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;(X509Certificate&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;cert&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;certs)&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color: #d0d0d0&#34;&gt;DateTime&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;expiration_date&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;DateTime(cert.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;getNotAfter&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;());&lt;/span&gt;
-        &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;days_to_expiration&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;Days.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;daysBetween&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;(DateTime.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;now&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;(),&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;expiration_date.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;getDays&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;();&lt;/span&gt;
-        &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;(days_to_expiration&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;days_threshold)&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;{&lt;/span&gt;
-            &lt;span style=&#34;color: #d0d0d0&#34;&gt;filtered.&lt;/span&gt;&lt;span style=&#34;color: #bbbbbb&#34;&gt;add&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;(cert);&lt;/span&gt;
-        &lt;span style=&#34;color: #d0d0d0&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color: #d0d0d0&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;filtered;&lt;/span&gt;
-&lt;span style=&#34;color: #d0d0d0&#34;&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
+&lt;pre&gt;
+&lt;code class=&#34;language-java&#34;&gt;
+private static List&lt;X509Certificate&gt; filterCertificates(List&lt;X509Certificate&gt; certs, int days_threshold) {
+    List&lt;X509Certificate&gt; filtered = Lists.newArrayList();
+    for (X509Certificate cert : certs) {
+        DateTime expiration_date = new DateTime(cert.getNotAfter());
+        int days_to_expiration = Days.daysBetween(DateTime.now(), expiration_date.getDays();
+        if (days_to_expiration &lt; days_threshold) {
+            filtered.add(cert);
+        }
+    }
+    return filtered;
+}
+&lt;/code&gt;
+&lt;/pre&gt;
 
 &lt;p&gt;Here, we&amp;rsquo;re simply making use of the excellent &lt;a href=&#34;http://www.joda.org/joda-time/quickstart.html&#34;&gt;Joda DateTime&lt;/a&gt;
 to parse the &lt;code&gt;java.util.Date&lt;/code&gt; object and compute the days between the curren

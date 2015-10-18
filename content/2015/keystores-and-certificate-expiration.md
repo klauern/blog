@@ -37,7 +37,8 @@ projects:
 
 Reading the Keystore is actually a pretty straight-forward process:
 
-{{< highlight java >}}
+<pre>
+<code class="language-java">
 // import a ton of stuff
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -72,7 +73,8 @@ try {
         fis.close();
     }
 }
-{{< /highlight >}}
+</code>
+</pre>
 
 
 # Traversing Certificates and Aliases
@@ -89,7 +91,8 @@ laudable in and of itself), but we want to be sure we aren't going to suffer the
 fate of thinking "well, our server cert passed, but this whole tree of servers'
 intermediate certificates expired".
 
-{{< highlight java >}}
+<pre>
+<code class="language-java">
 private static Map<String, List<Certificate>> getCertMap(KeyStore ks) throws KeyStoreException {
     Map<String, List<Certificate>> cert_map = Maps.newHashMap(); // Good 'ol Guava
     // Each KeyStore can return an "Enumeration" of aliases
@@ -107,7 +110,8 @@ private static Map<String, List<Certificate>> getCertMap(KeyStore ks) throws Key
     }
     return cert_map;
 }
-{{< /highlight >}}
+</code>
+</pre>
 
 # Filtering
 
@@ -115,7 +119,8 @@ Another assumption being made here is that if you have a certificate that's
 going to expire, it's most likely an **X.509** certificate, and so we only need
 to be concerned with a subset of certificates.
 
-{{< highlight java >}}
+<pre>
+<code class="language-java">
     private static Map<String, List<X509Certificate>> filterX509Certs(Map<String, List<Certificate>> cert_map) {
         Map<String, List<X509Certificate>> x509_map = Maps.newHashMap();
         for (Map.Entry<String, List<Certificate>> c : cert_map.entrySet()) {
@@ -131,14 +136,16 @@ to be concerned with a subset of certificates.
         }
         return x509_map;
     }
-{{< /highlight >}}
+</code>
+</pre>
 
 It took a lot longer to figure out that this one little line
 
-{{< highlight java >}}
+<pre>
+<code class="language-java">
                 if (cert.getType().equals("X.509")) {
-{{< /highlight >}}
-
+</code>
+</pre>
 is where you figure out the type.
 
 # Finding by Date
@@ -146,7 +153,8 @@ is where you figure out the type.
 Now that we have a mapped-listing of X.509 certificates and their chains mapped
 to an alias, we can iterate over them to find by date:
 
-{{< highlight java >}}
+<pre>
+<code class="language-java">
 private static List<X509Certificate> filterCertificates(List<X509Certificate> certs, int days_threshold) {
     List<X509Certificate> filtered = Lists.newArrayList();
     for (X509Certificate cert : certs) {
@@ -158,7 +166,8 @@ private static List<X509Certificate> filterCertificates(List<X509Certificate> ce
     }
     return filtered;
 }
-{{< /highlight >}}
+</code>
+</pre>
 
 Here, we're simply making use of the excellent [Joda DateTime](http://www.joda.org/joda-time/quickstart.html)
 to parse the `java.util.Date` object and compute the days between the curren
