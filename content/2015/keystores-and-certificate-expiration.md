@@ -142,8 +142,7 @@ to be concerned with a subset of certificates.
 It took a lot longer to figure out that this one little line
 
 <pre>
-<code class="language-java">
-                if (cert.getType().equals("X.509")) {
+<code class="language-java">if (cert.getType().equals("X.509")) {
 </code>
 </pre>
 is where you figure out the type.
