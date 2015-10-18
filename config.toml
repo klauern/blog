@@ -1,0 +1,5 @@
+baseurl = "http://blog.nickklauer.info/"
+languageCode = "en-us"
+title = "A Turn of Phrase"
+pygmentsuseclasses="false"
+pygmentsstyle = "native"
