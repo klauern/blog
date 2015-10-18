@@ -157,8 +157,7 @@ to be concerned with a subset of certificates.&lt;/p&gt;
 &lt;p&gt;It took a lot longer to figure out that this one little line&lt;/p&gt;
 
 &lt;pre&gt;
-&lt;code class=&#34;language-java&#34;&gt;
-                if (cert.getType().equals(&#34;X.509&#34;)) {
+&lt;code class=&#34;language-java&#34;&gt;if (cert.getType().equals(&#34;X.509&#34;)) {
 &lt;/code&gt;
 &lt;/pre&gt;
 is where you figure out the type.
