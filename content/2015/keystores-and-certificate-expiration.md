@@ -119,8 +119,7 @@ Another assumption being made here is that if you have a certificate that's
 going to expire, it's most likely an **X.509** certificate, and so we only need
 to be concerned with a subset of certificates.
 
-<pre>
-<code class="language-java">
+<pre><code class="language-java">
     private static Map<String, List<X509Certificate>> filterX509Certs(Map<String, List<Certificate>> cert_map) {
         Map<String, List<X509Certificate>> x509_map = Maps.newHashMap();
         for (Map.Entry<String, List<Certificate>> c : cert_map.entrySet()) {
@@ -136,8 +135,7 @@ to be concerned with a subset of certificates.
         }
         return x509_map;
     }
-</code>
-</pre>
+</code></pre>
 
 It took a lot longer to figure out that this one little line
 

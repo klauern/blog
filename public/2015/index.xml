@@ -134,8 +134,7 @@ private static Map&lt;String, List&lt;Certificate&gt;&gt; getCertMap(KeyStore ks
 going to expire, it&amp;rsquo;s most likely an &lt;strong&gt;X.509&lt;/strong&gt; certificate, and so we only need
 to be concerned with a subset of certificates.&lt;/p&gt;
 
-&lt;pre&gt;
-&lt;code class=&#34;language-java&#34;&gt;
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;
     private static Map&lt;String, List&lt;X509Certificate&gt;&gt; filterX509Certs(Map&lt;String, List&lt;Certificate&gt;&gt; cert_map) {
         Map&lt;String, List&lt;X509Certificate&gt;&gt; x509_map = Maps.newHashMap();
         for (Map.Entry&lt;String, List&lt;Certificate&gt;&gt; c : cert_map.entrySet()) {
@@ -151,8 +150,7 @@ to be concerned with a subset of certificates.&lt;/p&gt;
         }
         return x509_map;
     }
-&lt;/code&gt;
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;It took a lot longer to figure out that this one little line&lt;/p&gt;
 
