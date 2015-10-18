@@ -11,10 +11,10 @@
     
     <item>
       <title>keystores and certificate expiration</title>
-      <link>http://blog.nickklauer.info/keystores-and-certificate-expiration/</link>
+      <link>http://blog.nickklauer.info/2015/keystores-and-certificate-expiration/</link>
       <pubDate>Thu, 15 Oct 2015 20:02:18 -0500</pubDate>
       
-      <guid>http://blog.nickklauer.info/keystores-and-certificate-expiration/</guid>
+      <guid>http://blog.nickklauer.info/2015/keystores-and-certificate-expiration/</guid>
       <description>
 
 &lt;p&gt;I&amp;rsquo;ve seldom had to work with the Java Keystore, but as more and more sites start
