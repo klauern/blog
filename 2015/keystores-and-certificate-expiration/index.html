@@ -151,8 +151,7 @@ private static Map<String, List<Certificate>> getCertMap(KeyStore ks) throws Key
 going to expire, it&rsquo;s most likely an <strong>X.509</strong> certificate, and so we only need
 to be concerned with a subset of certificates.</p>
 
-<pre>
-<code class="language-java">
+<pre><code class="language-java">
     private static Map<String, List<X509Certificate>> filterX509Certs(Map<String, List<Certificate>> cert_map) {
         Map<String, List<X509Certificate>> x509_map = Maps.newHashMap();
         for (Map.Entry<String, List<Certificate>> c : cert_map.entrySet()) {
@@ -168,8 +167,7 @@ to be concerned with a subset of certificates.</p>
         }
         return x509_map;
     }
-</code>
-</pre>
+</code></pre>
 
 <p>It took a lot longer to figure out that this one little line</p>
 
