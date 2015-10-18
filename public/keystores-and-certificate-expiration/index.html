@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8">
+<meta name="generator" content="Hugo 0.15-DEV" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="http://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+<link rel="stylesheet" href="/css/normalize.css">
+<link rel="stylesheet" href="/css/skeleton.css">
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="A Turn of Phrase">
+<title>keystores and certificate expiration - A Turn of Phrase</title>
+</head>
+<body>
+
+<div class="container">
+
+	<header role="banner">
+		<div class="header-logo">
+			<a href="/"><img src="" width="60" height="60"></a>
+		</div>
+		
+	</header>
+
+
+	<main role="main">
+		<article itemscope itemtype="http://schema.org/BlogPosting">
+			<h1 class="entry-title" itemprop="headline">keystores and certificate expiration</h1>
+			<span class="entry-meta"><time itemprop="datePublished" datetime="2015-10-15">October 15, 2015</time></span>
+			<section itemprop="entry-text">
+				
+
+<p>I&rsquo;ve seldom had to work with the Java Keystore, but as more and more sites start
+using SSL, it&rsquo;s grown more important to ensure that certificates stored on your
+side don&rsquo;t arbitrarily expire.  This is especially important if you&rsquo;re not
+simply relying or verifying intermediate and root certificates.  A self-signed
+server certificate is oftentimes <em>easy enough</em> to do for some applications, and
+that expiration can come quicker than you anticipate.</p>
+
+<p>In this section, I&rsquo;ll demonstrate a little bit about how you can get at the
+certificate store within the relatively standard JKS-format of the Java
+Cryptography Keystore.  Other stores may not work this way, or may require
+a different set of processes.</p>
+
+<p>Side Note: I have to give credit where credit is due, and <a href="http://stackoverflow.com/a/10986535/7008">this StackOverflow
+answer</a>
+provided a great starting point for getting things going.  It was essentially
+the foundation for what you&rsquo;ll see in this post.</p>
+
+<h1 id="parsing-the-keystore:ea83c6f13264b77e32b6387eb48f3ca8">Parsing the Keystore</h1>
+
+<p>To make this easy, I generally use the following libraries in most of my
+projects:</p>
+
+<ol>
+<li><a href="https://github.com/google/guava">Google Guava</a></li>
+<li><a href="http://www.joda.org/joda-time/">Joda Time</a>
+
+<ul>
+<li>Of course, if you&rsquo;re lucky enough to use Java 8, we&rsquo;d be using
+<a href="http://www.oracle.com/technetwork/articles/java/jf14-date-time-2125367.html">Java 8&rsquo;s Date and Time</a>
+library.  But, for a vast majority of users, we&rsquo;re stuck with 7 or less.
+Ah, c&rsquo;est la vie.</li>
+</ul></li>
+</ol>
+
+<p>Reading the Keystore is actually a pretty straight-forward process:</p>
+
+<div class="highlight" style="background: #202020"><pre style="line-height: 125%"><span style="color: #999999; font-style: italic">// import a ton of stuff</span>
+<span style="color: #6ab825; font-weight: bold">import</span> <span style="color: #447fcf; text-decoration: underline">com.google.common.collect.Lists</span><span style="color: #d0d0d0">;</span>
+<span style="color: #6ab825; font-weight: bold">import</span> <span style="color: #447fcf; text-decoration: underline">com.google.common.collect.Maps</span><span style="color: #d0d0d0">;</span>
+<span style="color: #6ab825; font-weight: bold">import</span> <span style="color: #447fcf; text-decoration: underline">org.joda.time.DateTime</span><span style="color: #d0d0d0">;</span>
+<span style="color: #6ab825; font-weight: bold">import</span> <span style="color: #447fcf; text-decoration: underline">org.joda.time.Days</span><span style="color: #d0d0d0">;</span>
+
+<span style="color: #6ab825; font-weight: bold">import</span> <span style="color: #447fcf; text-decoration: underline">java.io.FileInputStream</span><span style="color: #d0d0d0">;</span>
+<span style="color: #6ab825; font-weight: bold">import</span> <span style="color: #447fcf; text-decoration: underline">java.io.IOException</span><span style="color: #d0d0d0">;</span>
+<span style="color: #6ab825; font-weight: bold">import</span> <span style="color: #447fcf; text-decoration: underline">java.security.KeyStore</span><span style="color: #d0d0d0">;</span>
+<span style="color: #6ab825; font-weight: bold">import</span> <span style="color: #447fcf; text-decoration: underline">java.security.KeyStoreException</span><span style="color: #d0d0d0">;</span>
+<span style="color: #6ab825; font-weight: bold">import</span> <span style="color: #447fcf; text-decoration: underline">java.security.NoSuchAlgorithmException</span><span style="color: #d0d0d0">;</span>
+<span style="color: #6ab825; font-weight: bold">import</span> <span style="color: #447fcf; text-decoration: underline">java.security.UnrecoverableEntryException</span><span style="color: #d0d0d0">;</span>
+<span style="color: #6ab825; font-weight: bold">import</span> <span style="color: #447fcf; text-decoration: underline">java.security.cert.Certificate</span><span style="color: #d0d0d0">;</span>
+<span style="color: #6ab825; font-weight: bold">import</span> <span style="color: #447fcf; text-decoration: underline">java.security.cert.CertificateException</span><span style="color: #d0d0d0">;</span>
+<span style="color: #6ab825; font-weight: bold">import</span> <span style="color: #447fcf; text-decoration: underline">java.security.cert.X509Certificate</span><span style="color: #d0d0d0">;</span>
+<span style="color: #6ab825; font-weight: bold">import</span> <span style="color: #447fcf; text-decoration: underline">java.util.*</span><span style="color: #d0d0d0">;</span>
+
+<span style="color: #999999; font-style: italic">// ... more code, some method somewhere</span>
+
+<span style="color: #d0d0d0">KeyStore</span> <span style="color: #d0d0d0">ks</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">KeyStore.</span><span style="color: #bbbbbb">getInstance</span><span style="color: #d0d0d0">(KeyStore.</span><span style="color: #bbbbbb">getDefaultType</span><span style="color: #d0d0d0">());</span>
+<span style="color: #6ab825; font-weight: bold">char</span><span style="color: #d0d0d0">[]</span> <span style="color: #d0d0d0">pass</span> <span style="color: #d0d0d0">=</span> <span style="color: #ed9d13">&quot;changeit&quot;</span><span style="color: #d0d0d0">;</span> <span style="color: #999999; font-style: italic">// or whatever</span>
+
+<span style="color: #d0d0d0">java.</span><span style="color: #bbbbbb">io</span><span style="color: #d0d0d0">.</span><span style="color: #bbbbbb">InputStream</span> <span style="color: #d0d0d0">fis</span> <span style="color: #d0d0d0">=</span> <span style="color: #6ab825; font-weight: bold">null</span><span style="color: #d0d0d0">;</span>
+<span style="color: #6ab825; font-weight: bold">try</span> <span style="color: #d0d0d0">{</span>
+    <span style="color: #d0d0d0">fis</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">Reader.</span><span style="color: #bbbbbb">class</span><span style="color: #d0d0d0">.</span><span style="color: #bbbbbb">getClassLoader</span><span style="color: #d0d0d0">().</span><span style="color: #bbbbbb">getResourceAsStream</span><span style="color: #d0d0d0">(file_path);</span>
+    <span style="color: #d0d0d0">ks.</span><span style="color: #bbbbbb">load</span><span style="color: #d0d0d0">(fis,</span> <span style="color: #d0d0d0">pass);</span>
+
+    <span style="color: #999999; font-style: italic">// Get Certificate listing</span>
+
+<span style="color: #d0d0d0">}</span> <span style="color: #6ab825; font-weight: bold">finally</span> <span style="color: #d0d0d0">{</span>
+    <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(fis</span> <span style="color: #d0d0d0">!=</span> <span style="color: #6ab825; font-weight: bold">null</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">{</span>
+        <span style="color: #d0d0d0">fis.</span><span style="color: #bbbbbb">close</span><span style="color: #d0d0d0">();</span>
+    <span style="color: #d0d0d0">}</span>
+<span style="color: #d0d0d0">}</span>
+</pre></div>
+
+
+<h1 id="traversing-certificates-and-aliases:ea83c6f13264b77e32b6387eb48f3ca8">Traversing Certificates and Aliases</h1>
+
+<p>From this point, we&rsquo;re able to read in and claim <strong>success</strong>! Nah, not really.
+What do you want to do with this?  Well, in this case, our KeyStore will have
+a lot of various certificates and trusts in it.  For our use, we simply want to
+validate the ones that are going to expire.</p>
+
+<p>With each certificate that we have, there are likely 1 or more other
+certificates in a <a href="https://support.dnsimple.com/articles/what-is-ssl-certificate-chain/"><strong>certificate chain</strong></a>.
+We aren&rsquo;t simply going to find expired server certificates (although that&rsquo;s
+laudable in and of itself), but we want to be sure we aren&rsquo;t going to suffer the
+fate of thinking &ldquo;well, our server cert passed, but this whole tree of servers&rsquo;
+intermediate certificates expired&rdquo;.</p>
+
+<div class="highlight" style="background: #202020"><pre style="line-height: 125%"><span style="color: #6ab825; font-weight: bold">private</span> <span style="color: #6ab825; font-weight: bold">static</span> <span style="color: #d0d0d0">Map&lt;String,</span> <span style="color: #d0d0d0">List&lt;Certificate&gt;&gt;</span> <span style="color: #447fcf">getCertMap</span><span style="color: #d0d0d0">(KeyStore</span> <span style="color: #d0d0d0">ks)</span> <span style="color: #6ab825; font-weight: bold">throws</span> <span style="color: #d0d0d0">KeyStoreException</span> <span style="color: #d0d0d0">{</span>
+    <span style="color: #d0d0d0">Map&lt;String,</span> <span style="color: #d0d0d0">List&lt;Certificate&gt;&gt;</span> <span style="color: #d0d0d0">cert_map</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">Maps.</span><span style="color: #bbbbbb">newHashMap</span><span style="color: #d0d0d0">();</span> <span style="color: #999999; font-style: italic">// Good &#39;ol Guava</span>
+    <span style="color: #999999; font-style: italic">// Each KeyStore can return an &quot;Enumeration&quot; of aliases</span>
+    <span style="color: #d0d0d0">Enumeration&lt;String&gt;</span> <span style="color: #d0d0d0">aliases</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">ks.</span><span style="color: #bbbbbb">aliases</span><span style="color: #d0d0d0">();</span>
+    <span style="color: #6ab825; font-weight: bold">while</span> <span style="color: #d0d0d0">(aliases.</span><span style="color: #bbbbbb">hasMoreElements</span><span style="color: #d0d0d0">())</span> <span style="color: #d0d0d0">{</span>
+        <span style="color: #d0d0d0">String</span> <span style="color: #d0d0d0">alias</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">aliases.</span><span style="color: #bbbbbb">nextElement</span><span style="color: #d0d0d0">();</span>
+        <span style="color: #d0d0d0">Certificate[]</span> <span style="color: #d0d0d0">certs</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">ks.</span><span style="color: #bbbbbb">getCertificateChain</span><span style="color: #d0d0d0">(alias);</span>
+        <span style="color: #999999; font-style: italic">// It&#39;s not a guarantee that you&#39;ll have ANY certificates</span>
+        <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(certs</span> <span style="color: #d0d0d0">!=</span> <span style="color: #6ab825; font-weight: bold">null</span> <span style="color: #d0d0d0">&amp;&amp;</span> <span style="color: #d0d0d0">certs.</span><span style="color: #bbbbbb">length</span> <span style="color: #d0d0d0">&gt;</span> <span style="color: #3677a9">0</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">{</span>
+            <span style="color: #d0d0d0">cert_map.</span><span style="color: #bbbbbb">put</span><span style="color: #d0d0d0">(alias,</span> <span style="color: #d0d0d0">Lists.</span><span style="color: #bbbbbb">newArrayList</span><span style="color: #d0d0d0">(certs));</span>
+        <span style="color: #d0d0d0">}</span> <span style="color: #6ab825; font-weight: bold">else</span> <span style="color: #d0d0d0">{</span>
+            <span style="color: #d0d0d0">Certificate</span> <span style="color: #d0d0d0">cert</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">ks.</span><span style="color: #bbbbbb">getCertificate</span><span style="color: #d0d0d0">(alias);</span>
+            <span style="color: #d0d0d0">cert_map.</span><span style="color: #bbbbbb">put</span><span style="color: #d0d0d0">(alias,</span> <span style="color: #d0d0d0">Lists.</span><span style="color: #bbbbbb">newArrayList</span><span style="color: #d0d0d0">(cert));</span>
+        <span style="color: #d0d0d0">}</span>
+    <span style="color: #d0d0d0">}</span>
+    <span style="color: #6ab825; font-weight: bold">return</span> <span style="color: #d0d0d0">cert_map;</span>
+<span style="color: #d0d0d0">}</span>
+</pre></div>
+
+
+<h1 id="filtering:ea83c6f13264b77e32b6387eb48f3ca8">Filtering</h1>
+
+<p>Another assumption being made here is that if you have a certificate that&rsquo;s
+going to expire, it&rsquo;s most likely an <strong>X.509</strong> certificate, and so we only need
+to be concerned with a subset of certificates.</p>
+
+<div class="highlight" style="background: #202020"><pre style="line-height: 125%">    <span style="color: #6ab825; font-weight: bold">private</span> <span style="color: #6ab825; font-weight: bold">static</span> <span style="color: #d0d0d0">Map&lt;String,</span> <span style="color: #d0d0d0">List&lt;X509Certificate&gt;&gt;</span> <span style="color: #447fcf">filterX509Certs</span><span style="color: #d0d0d0">(Map&lt;String,</span> <span style="color: #d0d0d0">List&lt;Certificate&gt;&gt;</span> <span style="color: #d0d0d0">cert_map)</span> <span style="color: #d0d0d0">{</span>
+        <span style="color: #d0d0d0">Map&lt;String,</span> <span style="color: #d0d0d0">List&lt;X509Certificate&gt;&gt;</span> <span style="color: #d0d0d0">x509_map</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">Maps.</span><span style="color: #bbbbbb">newHashMap</span><span style="color: #d0d0d0">();</span>
+        <span style="color: #6ab825; font-weight: bold">for</span> <span style="color: #d0d0d0">(Map.</span><span style="color: #bbbbbb">Entry</span><span style="color: #d0d0d0">&lt;String,</span> <span style="color: #d0d0d0">List&lt;Certificate&gt;&gt;</span> <span style="color: #d0d0d0">c</span> <span style="color: #d0d0d0">:</span> <span style="color: #d0d0d0">cert_map.</span><span style="color: #bbbbbb">entrySet</span><span style="color: #d0d0d0">())</span> <span style="color: #d0d0d0">{</span>
+            <span style="color: #d0d0d0">List&lt;X509Certificate&gt;</span> <span style="color: #d0d0d0">certs</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">Lists.</span><span style="color: #bbbbbb">newArrayListWithCapacity</span><span style="color: #d0d0d0">(c.</span><span style="color: #bbbbbb">getValue</span><span style="color: #d0d0d0">().</span><span style="color: #bbbbbb">size</span><span style="color: #d0d0d0">());</span>
+            <span style="color: #6ab825; font-weight: bold">for</span> <span style="color: #d0d0d0">(Certificate</span> <span style="color: #d0d0d0">cert</span> <span style="color: #d0d0d0">:</span> <span style="color: #d0d0d0">c.</span><span style="color: #bbbbbb">getValue</span><span style="color: #d0d0d0">())</span> <span style="color: #d0d0d0">{</span>
+                <span style="color: #999999; font-style: italic">// This is where the magic happens...</span>
+                <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(cert.</span><span style="color: #bbbbbb">getType</span><span style="color: #d0d0d0">().</span><span style="color: #bbbbbb">equals</span><span style="color: #d0d0d0">(</span><span style="color: #ed9d13">&quot;X.509&quot;</span><span style="color: #d0d0d0">))</span> <span style="color: #d0d0d0">{</span>
+                    <span style="color: #999999; font-style: italic">// cast the type to X509Certificate</span>
+                    <span style="color: #d0d0d0">certs.</span><span style="color: #bbbbbb">add</span><span style="color: #d0d0d0">((X509Certificate)</span> <span style="color: #d0d0d0">cert);</span>
+                <span style="color: #d0d0d0">}</span>
+            <span style="color: #d0d0d0">}</span>
+            <span style="color: #d0d0d0">x509_map.</span><span style="color: #bbbbbb">put</span><span style="color: #d0d0d0">(c.</span><span style="color: #bbbbbb">getKey</span><span style="color: #d0d0d0">(),</span> <span style="color: #d0d0d0">certs);</span>
+        <span style="color: #d0d0d0">}</span>
+        <span style="color: #6ab825; font-weight: bold">return</span> <span style="color: #d0d0d0">x509_map;</span>
+    <span style="color: #d0d0d0">}</span>
+</pre></div>
+
+
+<p>It took a lot longer to figure out that this one little line</p>
+
+<div class="highlight" style="background: #202020"><pre style="line-height: 125%">                <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(cert.</span><span style="color: #bbbbbb">getType</span><span style="color: #d0d0d0">().</span><span style="color: #bbbbbb">equals</span><span style="color: #d0d0d0">(</span><span style="color: #ed9d13">&quot;X.509&quot;</span><span style="color: #d0d0d0">))</span> <span style="color: #d0d0d0">{</span>
+</pre></div>
+
+
+<p>is where you figure out the type.</p>
+
+<h1 id="finding-by-date:ea83c6f13264b77e32b6387eb48f3ca8">Finding by Date</h1>
+
+<p>Now that we have a mapped-listing of X.509 certificates and their chains mapped
+to an alias, we can iterate over them to find by date:</p>
+
+<div class="highlight" style="background: #202020"><pre style="line-height: 125%"><span style="color: #6ab825; font-weight: bold">private</span> <span style="color: #6ab825; font-weight: bold">static</span> <span style="color: #d0d0d0">List&lt;X509Certificate&gt;</span> <span style="color: #447fcf">filterCertificates</span><span style="color: #d0d0d0">(List&lt;X509Certificate&gt;</span> <span style="color: #d0d0d0">certs,</span> <span style="color: #6ab825; font-weight: bold">int</span> <span style="color: #d0d0d0">days_threshold)</span> <span style="color: #d0d0d0">{</span>
+    <span style="color: #d0d0d0">List&lt;X509Certificate&gt;</span> <span style="color: #d0d0d0">filtered</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">Lists.</span><span style="color: #bbbbbb">newArrayList</span><span style="color: #d0d0d0">();</span>
+    <span style="color: #6ab825; font-weight: bold">for</span> <span style="color: #d0d0d0">(X509Certificate</span> <span style="color: #d0d0d0">cert</span> <span style="color: #d0d0d0">:</span> <span style="color: #d0d0d0">certs)</span> <span style="color: #d0d0d0">{</span>
+        <span style="color: #d0d0d0">DateTime</span> <span style="color: #d0d0d0">expiration_date</span> <span style="color: #d0d0d0">=</span> <span style="color: #6ab825; font-weight: bold">new</span> <span style="color: #d0d0d0">DateTime(cert.</span><span style="color: #bbbbbb">getNotAfter</span><span style="color: #d0d0d0">());</span>
+        <span style="color: #6ab825; font-weight: bold">int</span> <span style="color: #d0d0d0">days_to_expiration</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">Days.</span><span style="color: #bbbbbb">daysBetween</span><span style="color: #d0d0d0">(DateTime.</span><span style="color: #bbbbbb">now</span><span style="color: #d0d0d0">(),</span> <span style="color: #d0d0d0">expiration_date.</span><span style="color: #bbbbbb">getDays</span><span style="color: #d0d0d0">();</span>
+        <span style="color: #6ab825; font-weight: bold">if</span> <span style="color: #d0d0d0">(days_to_expiration</span> <span style="color: #d0d0d0">&lt;</span> <span style="color: #d0d0d0">days_threshold)</span> <span style="color: #d0d0d0">{</span>
+            <span style="color: #d0d0d0">filtered.</span><span style="color: #bbbbbb">add</span><span style="color: #d0d0d0">(cert);</span>
+        <span style="color: #d0d0d0">}</span>
+    <span style="color: #d0d0d0">}</span>
+    <span style="color: #6ab825; font-weight: bold">return</span> <span style="color: #d0d0d0">filtered;</span>
+<span style="color: #d0d0d0">}</span>
+</pre></div>
+
+
+<p>Here, we&rsquo;re simply making use of the excellent <a href="http://www.joda.org/joda-time/quickstart.html">Joda DateTime</a>
+to parse the <code>java.util.Date</code> object and compute the days between the curren
+time and the expiration date.  I&rsquo;d rather not worry about leap years, other
+calendar types, etc., when computing things, so let&rsquo;s just let a great library
+do that for us.</p>
+
+<h1 id="summary:ea83c6f13264b77e32b6387eb48f3ca8">Summary</h1>
+
+<p>I hope this overview of how to parse and compute expiration dates on
+certificates in your Keystore can be of some use.  It&rsquo;s not hard, but half the
+battle is figuring out <strong>what</strong> you need to know before you do it.</p>
+
+			</section>
+		</article>
+	</main>
+
+
+	<footer role="contentinfo">
+		<div class="hr"></div>
+		<div class="footer-link">
+			
+			
+			
+			
+		</div>
+		<div class="copyright">Copyright &copy; </div>
+	</footer>
+
+</div>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+</body>
+</html>
