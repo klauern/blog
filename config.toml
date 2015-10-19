@@ -3,3 +3,7 @@ languageCode = "en-us"
 title = "A Turn of Phrase"
 pygmentsuseclasses="false"
 pygmentsstyle = "native"
+
+[params]
+copyright = "2015 Nick Klauer"
+logo = "https://s.gravatar.com/avatar/76c55292df5e9df9042eaf89ac35954b?s=80"
