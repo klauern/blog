@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8">
+<meta name="generator" content="Hugo 0.15-DEV" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/ir_black.min.css">
+
+<script src="js/highlight.pack.js"</script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link href="http://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="/css/normalize.css">
+<link rel="stylesheet" href="/css/skeleton.css">
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="A Turn of Phrase">
+<title>Remy - RESTful client for WebLogic Servers - A Turn of Phrase</title>
+</head>
+<body>
+
+<div class="container">
+
+	<header role="banner">
+		<div class="header-logo">
+			<a href="/"><img src="" width="60" height="60"></a>
+		</div>
+		
+	</header>
+
+
+	<main role="main">
+		<article itemscope itemtype="http://schema.org/BlogPosting">
+			<h1 class="entry-title" itemprop="headline">Remy - RESTful client for WebLogic Servers</h1>
+			<span class="entry-meta"><time itemprop="datePublished" datetime="2015-10-18">October 18, 2015</time></span>
+			<section itemprop="entry-text">
+				
+
+<p>I&rsquo;ve been learning the <a href="https://golang.org">Go</a> programming language for the
+past few months.  I can&rsquo;t say I&rsquo;m totally smitten with the language, but with
+it&rsquo;s ability to produce self-contained, cross-platform binaries, it is really
+compelling, language semantics aside.</p>
+
+<p>Anyways, while working with Go, I tried to find out how easy it would be to
+generate really useful, self-contained command-line applications.  I don&rsquo;t have
+nearly the same need for the concurrency features that Go provides, but I&rsquo;m
+certain that the stepping-stone to getting there is to be able to create small,
+focused tools, adding concurrency as needed afterwards.</p>
+
+<h1 id="weblogic-restful-management-services:37b48de942ca676c4cd059402ad010ab">WebLogic RESTful Management Services</h1>
+
+<p>This isn&rsquo;t exactly a <strong>new</strong> feature of WebLogic server, but Oracle built in
+a set <a href="http://docs.oracle.com/cd/E23943_01/web.1111/e24682/toc.htm#RESTS149">of RESTful API&rsquo;s</a>
+that let you query an Administration Server for various statistics of your
+managed servers in a domain.  You can use whatever kind of tool to query this,
+like <code>curl</code>, <code>wget</code>, etc., but I thought it might be fun to try to wrap this
+into some kind of command-line tool.</p>
+
+<h1 id="enter-remy:37b48de942ca676c4cd059402ad010ab">Enter Remy</h1>
+
+<p>That&rsquo;s where I came up with the <a href="https://github.com/klauern/remy">Remy command-line
+application</a>.  Remy is really
+just a play on vocabulary for <strong>RESTful Management Extensions</strong>, REME(long-E).</p>
+
+<p>There&rsquo;s a lot of features that Oracle put in place with the WebLogic RESTful
+Management Services, so typing <code>remy help</code> will get you familiarized with
+<em>what</em>&rsquo;s available:</p>
+
+<pre><code class="language-powershell">C:\
+&gt; remy help
+Query a WebLogic Domain's resources, including Datasources, Applications, Clusters, and Servers by using the WebLogic RESTful Management Extensions API
+
+Usage:
+  remy [command]
+
+Available Commands:
+  applications Query applications deployed under AdminServer
+  config       Configure the credentials and server to default REST connections to
+  clusters     Query clusters under AdminServer
+  datasources  Query datasources under AdminServer
+  servers      Display Server information
+  version      Show the version of this command
+
+Flags:
+  -s, --adminurl=&quot;http://localhost:7001&quot;: Url for the Admin Server
+  -f, --full-format[=false]: Return full format from REST server
+  -p, --password=&quot;welcome1&quot;: Password for the user
+  -u, --username=&quot;weblogic&quot;: Username with privileges to access AdminServer
+
+Use &quot;remy [command] --help&quot; for more information about a command.
+</code></pre>
+
+<h2 id="querying:37b48de942ca676c4cd059402ad010ab">Querying</h2>
+
+<p>All commands require some form of the <code>AdminUrl</code>, <code>Password</code> and <code>Username</code>, in
+order to query an appropriate AdminServer instance.  This can be specified on
+the command-line with the global <code>--adminurl</code>, <code>--password</code>, and <code>--username</code>
+flags, respectively:</p>
+
+<pre><code class="language-powershell">$ remy servers --adminurl &quot;http://adminServer:7001&quot; --password &quot;welcome1&quot; --username &quot;weblogic&quot;
+Finding all Servers
+Using Full Format? false
+Name:        AdminServer   | State:           RUNNING       | Health:        HEALTH_OK
+Cluster:                   | CurrentMachine:                | JVM Load:      0
+Sockets #:   0             | Heap Sz Cur:     0             | Heap Free Cur: 0
+Java Ver:                  | OS Name:                       | OS Version:
+WLS Version:
+
+Name:        WLS_WSM1      | State:           RUNNING       | Health:        HEALTH_OK
+Cluster:                   | CurrentMachine:                | JVM Load:      0
+Sockets #:   0             | Heap Sz Cur:     0             | Heap Free Cur: 0
+Java Ver:                  | OS Name:                       | OS Version:
+WLS Version:
+
+Name:        WLS_SOA1      | State:           RUNNING       | Health:        HEALTH_OK
+Cluster:                   | CurrentMachine:                | JVM Load:      0
+Sockets #:   0             | Heap Sz Cur:     0             | Heap Free Cur: 0
+Java Ver:                  | OS Name:                       | OS Version:
+WLS Version:
+
+Name:        WLS_OSB1      | State:           RUNNING       | Health:        HEALTH_OK
+Cluster:                   | CurrentMachine:                | JVM Load:      0
+Sockets #:   0             | Heap Sz Cur:     0             | Heap Free Cur: 0
+Java Ver:                  | OS Name:                       | OS Version:
+WLS Version:
+</code></pre>
+
+<h2 id="configuration:37b48de942ca676c4cd059402ad010ab">Configuration</h2>
+
+<p>Typing in the username, password, etc., on the command-line is not really the
+greatest way to solve the problem, and is very likely insecure, so we can do one
+better.  With Remy, I implemented a <a href="https://github.com/toml-lang/toml"><code>TOML</code></a>-formatted
+configuration format.  It looks like this:</p>
+
+<pre><code class="language-toml">AdminURL = &quot;http://adminserver.local:7001&quot;
+Username = &quot;weblogic&quot;
+Password = &quot;welcome1&quot;
+</code></pre>
+
+<p>Now, you may think, &ldquo;That password is in plain text&rdquo;.  You&rsquo;d be correct. The way
+to configure this how you like is to call the <code>remy config --local --password
+'password'</code>, or <code>$env:PASSWD</code> environment variable, or whatever you like doing
+in Bash (maybe <code>read -s PASSWD</code>).</p>
+
+<p>Now, you can look at the file and see that it is at least encrypted/abstracted
+a bit using a built-in encryption key:</p>
+
+<pre><code class="language-powershell">C:\
+λ cat .\wlsrest.toml
+AdminURL = &quot;http://adminserver.local:7001&quot;
+Username = &quot;weblogic&quot;
+Password = &quot;{AES}LR8d4zIdsRl0CqmKRvVBDuk3&quot;
+</code></pre>
+
+<p>The next thought that you might have &ldquo;well, you&rsquo;re using a plainly-visible,
+known, searchable-on-your-repo, password.  Yes, you&rsquo;re correct.  I love smart
+people.  Well, you can supply your own environment variable for it, too:</p>
+
+<pre><code class="language-powershell">$ export WLS_REMYKEY=&quot;My very very very awesome key!!!&quot; # (MUST be 32 bytes in length EXACTLY)
+$ remy config --local
+$ cat .\wlsrest.toml
+AdminURL = &quot;http://adminserver.local:7001&quot;
+Username = &quot;weblogic&quot;
+Password = &quot;{AES}BM1uj9uv1bD7KV6BXapCf1kucxDYbCU6&quot;
+</code></pre>
+
+<p>But I&rsquo;m sure there&rsquo;s other implications here.  I&rsquo;d like to keep going down the
+rabbit-hole, but honestly, I&rsquo;m really waiting for <a href="https://vaultproject.io/">Hashicorp Vault</a>
+to support LDAP a lot better than their current version (0.3.1 is pretty
+rudimentary for LDAP).  In that event, I&rsquo;d be all for getting that secret from
+Vault.  Although, I think that the <a href="https://www.yubico.com/products/yubikey-hardware/">FIDO U2F Yubikey</a>
+is probably even cooler when you get down to it, but I digress.</p>
+
+<h1 id="source-code-information-and-errata:37b48de942ca676c4cd059402ad010ab">Source Code, Information and Errata</h1>
+
+<p>I&rsquo;ve really only touched the surface of this tool.  I think you should take
+a look at it yourself:</p>
+
+<p>GitHub Source Code
+- <a href="https://github.com/klauern/remy">https://github.com/klauern/remy</a></p>
+
+<p>As I&rsquo;ve mentioned before, this is probably my second or third GoLang application
+(I&rsquo;m goign to call it Golang, so all you &ldquo;It&rsquo;s called Go&rdquo;, zealots need to get
+a life and realize Google search sucks with 2 letter
+verbs-used-as-programming-languages) so I am open to learning and finding out
+more about whether you think that the form is good.  I&rsquo;m not really looking for
+critiques on whether or not it&rsquo;s easier solved in a set of <code>curl</code> or <code>httpie</code>
+commands, because that&rsquo;s not what I wrote it for.</p>
+
+			</section>
+		</article>
+	</main>
+
+
+	<footer role="contentinfo">
+		<div class="hr"></div>
+		<div class="footer-link">
+			
+			
+			
+			
+		</div>
+		<div class="copyright">Copyright &copy; </div>
+	</footer>
+
+</div>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+</body>
+</html>
