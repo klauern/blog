@@ -6,8 +6,169 @@
     <description>Recent content in 2015s on A Turn of Phrase</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 15 Oct 2015 20:02:18 -0500</lastBuildDate>
+    <lastBuildDate>Sun, 18 Oct 2015 10:44:48 -0500</lastBuildDate>
     <atom:link href="http://blog.nickklauer.info/2015/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Remy - RESTful client for WebLogic Servers</title>
+      <link>http://blog.nickklauer.info/2015/announcing_remy/</link>
+      <pubDate>Sun, 18 Oct 2015 10:44:48 -0500</pubDate>
+      
+      <guid>http://blog.nickklauer.info/2015/announcing_remy/</guid>
+      <description>
+
+&lt;p&gt;I&amp;rsquo;ve been learning the &lt;a href=&#34;https://golang.org&#34;&gt;Go&lt;/a&gt; programming language for the
+past few months.  I can&amp;rsquo;t say I&amp;rsquo;m totally smitten with the language, but with
+it&amp;rsquo;s ability to produce self-contained, cross-platform binaries, it is really
+compelling, language semantics aside.&lt;/p&gt;
+
+&lt;p&gt;Anyways, while working with Go, I tried to find out how easy it would be to
+generate really useful, self-contained command-line applications.  I don&amp;rsquo;t have
+nearly the same need for the concurrency features that Go provides, but I&amp;rsquo;m
+certain that the stepping-stone to getting there is to be able to create small,
+focused tools, adding concurrency as needed afterwards.&lt;/p&gt;
+
+&lt;h1 id=&#34;weblogic-restful-management-services:37b48de942ca676c4cd059402ad010ab&#34;&gt;WebLogic RESTful Management Services&lt;/h1&gt;
+
+&lt;p&gt;This isn&amp;rsquo;t exactly a &lt;strong&gt;new&lt;/strong&gt; feature of WebLogic server, but Oracle built in
+a set &lt;a href=&#34;http://docs.oracle.com/cd/E23943_01/web.1111/e24682/toc.htm#RESTS149&#34;&gt;of RESTful API&amp;rsquo;s&lt;/a&gt;
+that let you query an Administration Server for various statistics of your
+managed servers in a domain.  You can use whatever kind of tool to query this,
+like &lt;code&gt;curl&lt;/code&gt;, &lt;code&gt;wget&lt;/code&gt;, etc., but I thought it might be fun to try to wrap this
+into some kind of command-line tool.&lt;/p&gt;
+
+&lt;h1 id=&#34;enter-remy:37b48de942ca676c4cd059402ad010ab&#34;&gt;Enter Remy&lt;/h1&gt;
+
+&lt;p&gt;That&amp;rsquo;s where I came up with the &lt;a href=&#34;https://github.com/klauern/remy&#34;&gt;Remy command-line
+application&lt;/a&gt;.  Remy is really
+just a play on vocabulary for &lt;strong&gt;RESTful Management Extensions&lt;/strong&gt;, REME(long-E).&lt;/p&gt;
+
+&lt;p&gt;There&amp;rsquo;s a lot of features that Oracle put in place with the WebLogic RESTful
+Management Services, so typing &lt;code&gt;remy help&lt;/code&gt; will get you familiarized with
+&lt;em&gt;what&lt;/em&gt;&amp;rsquo;s available:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-powershell&#34;&gt;C:\
+&amp;gt; remy help
+Query a WebLogic Domain&#39;s resources, including Datasources, Applications, Clusters, and Servers by using the WebLogic RESTful Management Extensions API
+
+Usage:
+  remy [command]
+
+Available Commands:
+  applications Query applications deployed under AdminServer
+  config       Configure the credentials and server to default REST connections to
+  clusters     Query clusters under AdminServer
+  datasources  Query datasources under AdminServer
+  servers      Display Server information
+  version      Show the version of this command
+
+Flags:
+  -s, --adminurl=&amp;quot;http://localhost:7001&amp;quot;: Url for the Admin Server
+  -f, --full-format[=false]: Return full format from REST server
+  -p, --password=&amp;quot;welcome1&amp;quot;: Password for the user
+  -u, --username=&amp;quot;weblogic&amp;quot;: Username with privileges to access AdminServer
+
+Use &amp;quot;remy [command] --help&amp;quot; for more information about a command.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;querying:37b48de942ca676c4cd059402ad010ab&#34;&gt;Querying&lt;/h2&gt;
+
+&lt;p&gt;All commands require some form of the &lt;code&gt;AdminUrl&lt;/code&gt;, &lt;code&gt;Password&lt;/code&gt; and &lt;code&gt;Username&lt;/code&gt;, in
+order to query an appropriate AdminServer instance.  This can be specified on
+the command-line with the global &lt;code&gt;--adminurl&lt;/code&gt;, &lt;code&gt;--password&lt;/code&gt;, and &lt;code&gt;--username&lt;/code&gt;
+flags, respectively:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-powershell&#34;&gt;$ remy servers --adminurl &amp;quot;http://adminServer:7001&amp;quot; --password &amp;quot;welcome1&amp;quot; --username &amp;quot;weblogic&amp;quot;
+Finding all Servers
+Using Full Format? false
+Name:        AdminServer   | State:           RUNNING       | Health:        HEALTH_OK
+Cluster:                   | CurrentMachine:                | JVM Load:      0
+Sockets #:   0             | Heap Sz Cur:     0             | Heap Free Cur: 0
+Java Ver:                  | OS Name:                       | OS Version:
+WLS Version:
+
+Name:        WLS_WSM1      | State:           RUNNING       | Health:        HEALTH_OK
+Cluster:                   | CurrentMachine:                | JVM Load:      0
+Sockets #:   0             | Heap Sz Cur:     0             | Heap Free Cur: 0
+Java Ver:                  | OS Name:                       | OS Version:
+WLS Version:
+
+Name:        WLS_SOA1      | State:           RUNNING       | Health:        HEALTH_OK
+Cluster:                   | CurrentMachine:                | JVM Load:      0
+Sockets #:   0             | Heap Sz Cur:     0             | Heap Free Cur: 0
+Java Ver:                  | OS Name:                       | OS Version:
+WLS Version:
+
+Name:        WLS_OSB1      | State:           RUNNING       | Health:        HEALTH_OK
+Cluster:                   | CurrentMachine:                | JVM Load:      0
+Sockets #:   0             | Heap Sz Cur:     0             | Heap Free Cur: 0
+Java Ver:                  | OS Name:                       | OS Version:
+WLS Version:
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;configuration:37b48de942ca676c4cd059402ad010ab&#34;&gt;Configuration&lt;/h2&gt;
+
+&lt;p&gt;Typing in the username, password, etc., on the command-line is not really the
+greatest way to solve the problem, and is very likely insecure, so we can do one
+better.  With Remy, I implemented a &lt;a href=&#34;https://github.com/toml-lang/toml&#34;&gt;&lt;code&gt;TOML&lt;/code&gt;&lt;/a&gt;-formatted
+configuration format.  It looks like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;AdminURL = &amp;quot;http://adminserver.local:7001&amp;quot;
+Username = &amp;quot;weblogic&amp;quot;
+Password = &amp;quot;welcome1&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now, you may think, &amp;ldquo;That password is in plain text&amp;rdquo;.  You&amp;rsquo;d be correct. The way
+to configure this how you like is to call the &lt;code&gt;remy config --local --password
+&#39;password&#39;&lt;/code&gt;, or &lt;code&gt;$env:PASSWD&lt;/code&gt; environment variable, or whatever you like doing
+in Bash (maybe &lt;code&gt;read -s PASSWD&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;Now, you can look at the file and see that it is at least encrypted/abstracted
+a bit using a built-in encryption key:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-powershell&#34;&gt;C:\
+λ cat .\wlsrest.toml
+AdminURL = &amp;quot;http://adminserver.local:7001&amp;quot;
+Username = &amp;quot;weblogic&amp;quot;
+Password = &amp;quot;{AES}LR8d4zIdsRl0CqmKRvVBDuk3&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The next thought that you might have &amp;ldquo;well, you&amp;rsquo;re using a plainly-visible,
+known, searchable-on-your-repo, password.  Yes, you&amp;rsquo;re correct.  I love smart
+people.  Well, you can supply your own environment variable for it, too:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-powershell&#34;&gt;$ export WLS_REMYKEY=&amp;quot;My very very very awesome key!!!&amp;quot; # (MUST be 32 bytes in length EXACTLY)
+$ remy config --local
+$ cat .\wlsrest.toml
+AdminURL = &amp;quot;http://adminserver.local:7001&amp;quot;
+Username = &amp;quot;weblogic&amp;quot;
+Password = &amp;quot;{AES}BM1uj9uv1bD7KV6BXapCf1kucxDYbCU6&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;But I&amp;rsquo;m sure there&amp;rsquo;s other implications here.  I&amp;rsquo;d like to keep going down the
+rabbit-hole, but honestly, I&amp;rsquo;m really waiting for &lt;a href=&#34;https://vaultproject.io/&#34;&gt;Hashicorp Vault&lt;/a&gt;
+to support LDAP a lot better than their current version (0.3.1 is pretty
+rudimentary for LDAP).  In that event, I&amp;rsquo;d be all for getting that secret from
+Vault.  Although, I think that the &lt;a href=&#34;https://www.yubico.com/products/yubikey-hardware/&#34;&gt;FIDO U2F Yubikey&lt;/a&gt;
+is probably even cooler when you get down to it, but I digress.&lt;/p&gt;
+
+&lt;h1 id=&#34;source-code-information-and-errata:37b48de942ca676c4cd059402ad010ab&#34;&gt;Source Code, Information and Errata&lt;/h1&gt;
+
+&lt;p&gt;I&amp;rsquo;ve really only touched the surface of this tool.  I think you should take
+a look at it yourself:&lt;/p&gt;
+
+&lt;p&gt;GitHub Source Code
+- &lt;a href=&#34;https://github.com/klauern/remy&#34;&gt;https://github.com/klauern/remy&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;As I&amp;rsquo;ve mentioned before, this is probably my second or third GoLang application
+(I&amp;rsquo;m goign to call it Golang, so all you &amp;ldquo;It&amp;rsquo;s called Go&amp;rdquo;, zealots need to get
+a life and realize Google search sucks with 2 letter
+verbs-used-as-programming-languages) so I am open to learning and finding out
+more about whether you think that the form is good.  I&amp;rsquo;m not really looking for
+critiques on whether or not it&amp;rsquo;s easier solved in a set of &lt;code&gt;curl&lt;/code&gt; or &lt;code&gt;httpie&lt;/code&gt;
+commands, because that&amp;rsquo;s not what I wrote it for.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>keystores and certificate expiration</title>
