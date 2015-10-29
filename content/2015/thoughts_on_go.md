@@ -20,6 +20,20 @@ need to make a Unix-like CLI tool.
 
 # The Platform is Great
 
+One of the first things that I was drawn to was the ease in creating small,
+self-contained little applications.  I first found things like
+[Hugo](https://gohugo.io)'s static site generator to be pretty slick and
+compelling (and if you haven't noticed, I've taken it up for my own blog and
+homepage).  Then, other little tools started popping up, providing a lot of
+really cool, cross-platform features.  Things like [the_platinum_searcher](https://github.com/monochromegane/the_platinum_searcher)
+work on Windows, for pete's sake.  This is simply unheard of.  I am currently
+stuck at work using Windows for my desktop, and with it, I have had to resort to
+a lifetime of Googling "Alterative to X for Windows" kinds of searches for
+everything I like in Linux.
+
+With Go, I'm at least able to get these small applications and command-line
+tools working on Windows with as much ease as I do on Linux/Mac.  A quick `go
+get <package-name>` and I'm done.  Simple as that.
 
 
 # The Language is Not
