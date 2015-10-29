@@ -35,6 +35,7 @@ With Go, I'm at least able to get these small applications and command-line
 tools working on Windows with as much ease as I do on Linux/Mac.  A quick `go
 get <package-name>` and I'm done.  Simple as that.
 
+This is part of the reason I liked
 
 # The Language is Not
 
