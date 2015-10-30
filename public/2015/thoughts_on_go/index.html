@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8">
+<meta name="generator" content="Hugo 0.15-DEV" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/ir_black.min.css">
+
+<script src="js/highlight.pack.js"</script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link href="http://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="/css/normalize.css">
+<link rel="stylesheet" href="/css/skeleton.css">
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="A Turn of Phrase">
+<title>Thoughts On Go - A Turn of Phrase</title>
+</head>
+<body>
+
+<div class="container">
+
+	<header role="banner">
+		<div class="header-logo">
+			<a href="/"><img src="https://s.gravatar.com/avatar/76c55292df5e9df9042eaf89ac35954b?s=80" width="60" height="60"></a>
+		</div>
+		
+	</header>
+
+
+	<main role="main">
+		<article itemscope itemtype="http://schema.org/BlogPosting">
+			<h1 class="entry-title" itemprop="headline">Thoughts On Go</h1>
+			<span class="entry-meta"><time itemprop="datePublished" datetime="2015-10-29">October 29, 2015</time></span>
+			<section itemprop="entry-text">
+				
+
+<h1 id="learning-go:50ebbeb44ee3a6193481af0c7b0581a2">Learning Go</h1>
+
+<p>I started fumbling about wnating to write small applications that were portable
+and compatible with many platforms.  I have a lot of experience working with
+Java, and while I do well enough with that language, I find the need to package
+an entire JVM runtime along with an <a href="http://stackoverflow.com/questions/11947037/what-is-an-uber-jar">uberjar</a>
+was somewhat unsettling.  In addition, the runtime speed for small client-side
+applications was a bit of a turnoff to me.  It&rsquo;s great where it runs for a long
+period of time, but it is lacking in providing that fast bootstrap times you
+need to make a Unix-like CLI tool.</p>
+
+<p>It took probably a few days in my spare time to get a decent handle on the
+language, so I started out coding in it almost right away.  I&rsquo;ve written
+a couple small applications, and I can&rsquo;t say I had too many nightmares using it.
+That said, I am not necessarily impressed with developing in it.</p>
+
+<h1 id="the-platform-is-great:50ebbeb44ee3a6193481af0c7b0581a2">The Platform is Great</h1>
+
+<p>One of the first things that I was drawn to was the ease in creating small,
+self-contained little applications.  I first found things like
+<a href="https://gohugo.io">Hugo</a>&rsquo;s static site generator to be pretty slick and
+compelling (and if you haven&rsquo;t noticed, I&rsquo;ve taken it up for my own blog and
+homepage).  Then, other little tools started popping up, providing a lot of
+really cool, cross-platform features.  Things like <a href="https://github.com/monochromegane/the_platinum_searcher">the_platinum_searcher</a>
+work on Windows, for pete&rsquo;s sake.  This is simply unheard of.  I am currently
+stuck at work using Windows for my desktop, and with it, I have had to resort to
+a lifetime of Googling &ldquo;Alterative to X for Windows&rdquo; kinds of searches for
+everything I like in Linux.</p>
+
+<p>With Go, I&rsquo;m at least able to get these small applications and command-line
+tools working on Windows with as much ease as I do on Linux/Mac.  A quick <code>go
+get &lt;package-name&gt;</code> and I&rsquo;m done.  Simple as that.</p>
+
+<p>This is part of the reason I liked Java so much at the beginning.  The sales
+pitch of &ldquo;write once, run anywhere&rdquo; is really compelling, especially when you
+realize the effort it takes to do a /proper/ job of making a cross-platform
+application.  Just look at the discrepencies between any iOS application and an
+equivalent Android one.  It&rsquo;s not simply <strong>hard</strong> to make it look good on
+both&ndash;it&rsquo;s oftentimes at odds with how that system works.</p>
+
+<p>In Go, I&rsquo;m restricting myself to applications that run on the command-line, so
+I&rsquo;m not necessarily concerned or interested in GUI applications.</p>
+
+<p>With the prevalence of new tools and applications out there written in Go, it&rsquo;s
+pretty obvious that there are many people able to make successful use of their
+time in developing an application in Go and releasing it to the masses.  I can
+attest to the ease in the compile/retest cycle that seems to be pretty prevalent
+in Go, and I attribute the ability to release an application is due in part to
+the speed of compilation.</p>
+
+<p>So, with all of these benefits, I think the platform and community are doing
+a good job promoting the features of Go that make <strong>Go the Platform</strong> better than
+<strong>Go the Language</strong>.  With that said&hellip;</p>
+
+<h1 id="the-language-is-not:50ebbeb44ee3a6193481af0c7b0581a2">The Language is Not</h1>
+
+<p>I don&rsquo;t think it&rsquo;s necessary to rehash the arguments against the language.
+Plenty of people more experienced and knowledgable with Go have already done
+that.  Let me link to a few articles that I was somewhat intrigued by.  In most
+of these, I found myself nodding in agreement on their results and experiences:</p>
+
+<ul>
+<li><a href="https://www.reddit.com/r/programming/comments/3qjo3y/why_go_is_a_poorly_designed_language_from_a/">Why Go is a Poorly Designed Language (Reddit commentary)</a></li>
+<li><a href="http://www.evanmiller.org/four-days-of-go.html">Four Days of Go</a></li>
+<li><a href="http://nomad.so/2015/03/why-gos-design-is-a-disservice-to-intelligent-programmers/">Why Go&rsquo;s design is a disservice to intelligent programmers</a></li>
+</ul>
+
+<p>I only link to the <a href="https://www.reddit.com/r/programming/comments/3qjo3y/why_go_is_a_poorly_designed_language_from_a/">Reddit commentary</a> on the first article because I
+think it&rsquo;s important to see how a community responds to criticism.  It&rsquo;s easy to dismiss
+a poorly written article, but being able to introspect your own beliefs and ideals
+is part of what makes a person, and further, a <strong>community</strong> vibrant and able to
+keep up with change.  That said, I think this article was written by a non-native English
+speaker, so I gave it more credence than most.  Humility is one of those
+characteristics that will make most people better over time.  I can&rsquo;t say I see that
+in the Go community.</p>
+
+<p>One person in particular took the the time to respond
+to his piece <a href="https://www.reddit.com/r/golang/comments/3qjo2q/why_go_is_a_poorly_designed_language_from_a/cwfyp9c">with a lengthy comment</a>, and others are taking it as
+being a highlight of what a reasoned, responsible response should look like.
+I don&rsquo;t think his response really helped their case that Go is anything but a
+weak language with a great platform.  Consider some of the points being made:</p>
+
+<blockquote>
+<p>And yes, inserting numbers into a slice is a complicated action. This is because it ends up with a lot of copies. One of the things I like about Go is that it doesn&rsquo;t hide memory usage. Also, how often do you really need to insert values in the middle of a slice? Almost never. Usually it&rsquo;s the beginning or the end, and the beginning is pretty easy.</p>
+</blockquote>
+
+<p>I can&rsquo;t say I use slices <strong>at all</strong>, and that&rsquo;s mostly because I abhor the
+syntax and the random issues around it.</p>
+
+<p><br/></p>
+
+<p>This is made more apparent in the other two articles.  <a href="http://www.evanmiller.org/four-days-of-go.html">Evan Miller&rsquo;s
+piece</a> is probably the better of the many rantings about Go as
+a language:</p>
+
+<blockquote>
+<p>Reading Go’s mailing list and documentation, I get a similar sense of
+refusal-to-engage — the authors are communicative, to be sure, but in a
+didactic way. They seem tired of hearing people’s ideas, as if they’ve already
+thought of everything, and the relative success of Go at Google and elsewhere
+has only led them to turn the volume knob down. Which is a shame, because
+they’ll probably miss out on some good ideas (including my highly compelling,
+backwards-incompatible, double-triple-colon-assignment proposal mentioned
+above).</p>
+</blockquote>
+
+<p>I can&rsquo;t say I felt any different about it.  It&rsquo;s certainly one of those
+languages where you often ask &ldquo;I do X in Ruby/Python/Java/etc.  How do I do X in
+Go?&rdquo; Generally, the response is not, &ldquo;think in Go&rdquo;, but &ldquo;Go doesn&rsquo;t allow you to
+to do X because X is (add argument for explicit vs. implicit here, or something
+about compilers doing too much for you)&rdquo;</p>
+
+<p>It&rsquo;s pretty easy to dismiss a lot of language features that people like that
+way, and I&rsquo;m not necessarily one to argue for having more complexity, but I am
+quite turned off by the <a href="https://golang.org/doc/faq#Why_doesnt_Go_have_feature_X">arguments for missing features</a>, wondering
+when the designers of the language decided that most things beyond C-like
+languages were not necessary:</p>
+
+<blockquote>
+<p>If it bothers you that Go is missing feature X, please forgive us and
+investigate the features that Go does have. You might find that they
+compensate in interesting ways for the lack of X.</p>
+</blockquote>
+
+<p>Or that they completely punt on it, or expect the <a href="https://docs.google.com/document/d/1Bz5-UB7g2uPBdOx-rw5t9MxJwkfpx90cqG9AFL0JAYo/edit">community to pick up the
+slack</a>.</p>
+
+<p>The most damning critique of the language&ndash;and one that I think doesn&rsquo;t get
+enough attention&ndash;is in <a href="http://nomad.so/2015/03/why-gos-design-is-a-disservice-to-intelligent-programmers/">the third article</a>.  Coming from playing
+with Clojure, I find the premise that simplicity is paramount to be kind of
+laughable.  When Rich Hickey explains <a href="http://www.infoq.com/presentations/Simple-Made-Easy">Simple Made Easy</a>,
+he also made a point in explaining that simple solutions take an incredible
+amount of thought and focus on limiting the amount of complexity you introduce
+into your system.  I don&rsquo;t feel that Go has done anything in that regard.  It
+eschews complexity, sure, but offers nothing in terms of simplifying the
+problem.  You don&rsquo;t have to manage memory (Yay!) but you still have to manage
+everything else:</p>
+
+<ul>
+<li>memory addresses (slices)</li>
+<li>stack vs. heap allocation, and the myriad ways one goes about doing it</li>
+<li>pedantry around how you use the language (no unused imports, variable
+shadowing, etc)</li>
+<li>type complexity (just because you can make everything an <code>interface{}</code>,
+doesn&rsquo;t make it /generic/)</li>
+</ul>
+
+<p>and so on and so forth.</p>
+
+<h1 id="so-which-language-do-you-use:50ebbeb44ee3a6193481af0c7b0581a2">So which language do you use?</h1>
+
+<p>When writing in Go, you realize that the issues it solves are so much less about
+making it easy for the developer, and more about making it easy for the language
+developers.  I&rsquo;m not going to ignore it, but lacking generics should continue to
+be lambasted as a cop-out for some perceived trade-off that the designers didn&rsquo;t
+want to make.  They are more than happy to have you use <code>interface{}</code>
+everywhere, and just ignore all the types at a whim.  All of this is marginally
+better than C, though, so why not, right?</p>
+
+<p>With all that said, do I still support the language?  Well, let me put it to you
+another way.  As a developer, it&rsquo;s just as important to stay ahead of the curve
+on programming trends, fads, and phases.  Just as software teams are &ldquo;Java
+shops&rdquo;, &ldquo;Python shop&rdquo;, &ldquo;Cool, Fad-like Language shop&rdquo;, you will still want to be
+aware of and probably reasonably proficient in a popular language or two.  Go&rsquo;s
+not terrible, but that&rsquo;s mostly due to the platform and community.</p>
+
+<p>You do need to keep your eye out for shiny things.  People still code in C,
+so it&rsquo;s had a surprisingly long lifetime.  Ruby seemed to be pretty awesome for
+a while, but it&rsquo;s becoming obvious at this point that it&rsquo;s not the hot language
+to learn.  Same for Python, same for Java.</p>
+
+<p>Guess what?  Those languages didn&rsquo;t go away.  Go probably won&rsquo;t either.</p>
+
+<p>The tl;dr of this is that while I think Go is a poor language, you&rsquo;re probably
+going to be stuck using it in some form or fashion down the line, so don&rsquo;t
+dismiss it out of hand.  The platform is pretty good, the tooling around it
+seems to be getting better, and it&rsquo;s surprisingly effective for as simple as it
+is.</p>
+
+<p>Plenty of people use it effectively, and you can
+probably slap something half-working together yourself in a short amount of
+time.  Hell, even Rob Pike said that he designed the language for that purpose.
+Don&rsquo;t sing this languages praises, however.  The designers of it don&rsquo;t appear to
+be, but are sure as sh*t going to ride the wave with you.</p>
+
+			</section>
+		</article>
+	</main>
+
+
+	<footer role="contentinfo">
+		<div class="hr"></div>
+		<div class="footer-link">
+			
+			
+			
+			
+		</div>
+		<div class="copyright">Copyright &copy; 2015 Nick Klauer</div>
+	</footer>
+
+</div>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script data-no-instant>document.write('<script src="http://'
+        + (location.host || 'localhost').split(':')[0]
+		+ ':1313/livereload.js?mindelay=10"></'
+        + 'script>')</script></body>
+</html>
