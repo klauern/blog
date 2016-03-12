@@ -1,0 +1,9 @@
+localhost:2015 {
+    root public
+    basicauth   /admin user pass
+    log
+#    hugo        {
+#        styles  themes/klauern-hugo-zen
+#    }
+    tls         off
+}
