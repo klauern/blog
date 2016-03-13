@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>2016s on A Turn of Phrase</title>
+    <link>http://blog.nickklauer.info/2016/</link>
+    <description>Recent content in 2016s on A Turn of Phrase</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 13 Mar 2016 11:26:34 -0500</lastBuildDate>
+    <atom:link href="http://blog.nickklauer.info/2016/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Playing with NetGear Router Logs</title>
+      <link>http://blog.nickklauer.info/2016/netgearlogs/</link>
+      <pubDate>Sun, 13 Mar 2016 11:26:34 -0500</pubDate>
+      
+      <guid>http://blog.nickklauer.info/2016/netgearlogs/</guid>
+      <description>
+
+&lt;p&gt;I was recently toying around on my router and noticed that I can send myself
+a set of logs related to activity going on.  Considering this an interesting
+set of diagnostics, I thought it would be fun to create some way to parse these
+log entries and save them in some format.  In addition, as I am also always
+trying out new languages, the current language du jour is
+&lt;a href=&#34;https://golang.org&#34;&gt;Golang&lt;/a&gt;, so it seems like a reasonably interesting problem
+to solve in a library.&lt;/p&gt;
+
+&lt;h2 id=&#34;example-netgear-log-entries:dccc7fc9fcbc0b748d7e7a99db696914&#34;&gt;Example NetGear Log Entries&lt;/h2&gt;
+
+&lt;p&gt;Parsing a log seems like a fun diversion, and looking at the NetGear log format,
+it seems apparent that there was little formality in how they even logged what
+happened.  There&amp;rsquo;s &lt;strong&gt;some&lt;/strong&gt; structure to it, but it&amp;rsquo;s kinda messy:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[DoS Attack: ACK Scan] from source: 195.179.119.177, port 80, Monday, February 22, 2016 04:42:22
+[Internet connected] IP address: 127.0.0.1, Monday, February 22, 2016 09:02:59
+[DHCP IP: 192.168.1.11] to MAC address ff:ff:ff:ff:ff:ff, Monday, February 22, 2016 06:15:56
+[UPnP set event: del_nat_rule] from source 192.168.1.8, Saturday, February 20, 2016 19:27:21
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can see that while it seems like everything within the square braces (&lt;code&gt;[]&lt;/code&gt;)
+is simple, things like &lt;code&gt;DHCP IP: 192.168.1.11&lt;/code&gt; seem like a mixture of a rule
+type and a dynamic piece of data.  Parsing this isn&amp;rsquo;t like parsing a regular
+format, or at least, it has enough special rules that will make creating
+a parser a bit more work.&lt;/p&gt;
+
+&lt;h2 id=&#34;parsing-logs:dccc7fc9fcbc0b748d7e7a99db696914&#34;&gt;Parsing Logs&lt;/h2&gt;
+
+&lt;p&gt;I struck out to solve this in a couple ways.  My first attempt was a very simple
+attempt to brute-force the log by &lt;code&gt;switch&lt;/code&gt;&amp;lsquo;ing on a prefix, using some kind
+of parsing for each type of log entry.  You can find example code of this on my
+GitHub project here:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/klauern/go-netgearlogs/blob/master/netgear.go&#34;&gt;github.com/klauern/go-netgearlogs/netgear.go&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;I don&amp;rsquo;t particularly like the repetitive nature of it, but I wonder whether this
+isn&amp;rsquo;t just &amp;lsquo;acceptable code duplication&amp;rsquo; due to the nature of Go not allowing
+much in the way of abstraction.  That said, this works, and it throws everything
+I have given it into my generic &lt;code&gt;NetGear&lt;/code&gt; struct type.  Yay for progress.&lt;/p&gt;
+
+&lt;h2 id=&#34;go-s-parsing-strategies:dccc7fc9fcbc0b748d7e7a99db696914&#34;&gt;Go&amp;rsquo;s Parsing Strategies&lt;/h2&gt;
+
+&lt;p&gt;After throwing together the above example, I started doing a bit more digging
+and trying to determine if there was a &amp;ldquo;Go Way&amp;rdquo; to do things.  This is where
+I stumbled on an article I was really excited about reading on the topic:
+&lt;a href=&#34;https://blog.gopheracademy.com/advent-2014/parsers-lexers/&#34;&gt;Handwritten Parsers &amp;amp; Lexers in Go&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Using the above blog as a guide, I struck out to create another format of the
+parsing, to see if it would turn out to be simpler and/or more flexible. Currently,
+I have some files that are still in-progress, but feel MUCH more like
+a real parsing attempt for my problem.  I took a lot of inspiration
+(&lt;em&gt;cough&lt;/em&gt; copying &lt;em&gt;cough&lt;/em&gt;)  from this article, and the current result can be
+found in the source below:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/klauern/go-netgearlogs/blob/master/token.go&#34;&gt;github.com/klauern/go-netgearlogs/token.go&lt;/a&gt; (my list of tokens for a NetGear Log)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/klauern/go-netgearlogs/blob/master/scanner.go&#34;&gt;github.com/klauern/go-netgearlogs/scanner.go&lt;/a&gt; (scanner for tokenizing the input into something above)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/klauern/go-netgearlogs/blob/master/parser.go&#34;&gt;github.com/klauern/go-netgearlogs/parser.go&lt;/a&gt; (parser for converting those tokens into something tangible)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This is still a work-in-progress, but I highly recommend the blog post above if
+you&amp;rsquo;re curious on writing your own parser.  I also recommend finding something
+to write a parser for.  It really gives you a window into the world of text
+processing, programming language design, etc., and I walked away with a lot of
+knowledge on parsing that I did not have before.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
