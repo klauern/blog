@@ -1,6 +1,6 @@
 +++
-date = "2016-03-13T13:50:00-05:00"
-draft = true
+date = "2016-03-13T20:00:00-05:00"
+draft = false
 title = "JVM GC Log Parsing"
 
 +++
