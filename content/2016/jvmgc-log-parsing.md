@@ -5,7 +5,7 @@ title = "JVM GC Log Parsing"
 
 +++
 
-Along the same lines as my [previous post](netgearlogs), I had a need to
+Along the same lines as my [previous post](../netgearlogs), I had a need to
 analyze a set of JVM Garbage Collector logs for event types.  Consider a log
 entry like the following:
 
