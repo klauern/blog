@@ -1,6 +1,6 @@
 baseurl = "http://blog.nickklauer.info/"
 languageCode = "en-us"
-title = "I'd like to say I'm militant about it, but that's kind of who I am"
+title = "A Blog"
 pygmentsuseclasses="false"
 pygmentsstyle = "native"
 
