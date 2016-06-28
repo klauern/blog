@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8">
+<meta name="generator" content="Hugo 0.17-DEV" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/ir_black.min.css">
+
+<script src="js/highlight.pack.js"</script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link href="http://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="/css/normalize.css">
+<link rel="stylesheet" href="/css/skeleton.css">
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="A Blog">
+<title>Java 9 and Jigsaw improvements with &#39;jlink&#39; - A Blog</title>
+</head>
+<body>
+
+<div class="container">
+
+	<header role="banner">
+		<div class="header-logo">
+			<a href="/"><img src="https://s.gravatar.com/avatar/76c55292df5e9df9042eaf89ac35954b?s=80" width="60" height="60"></a>
+		</div>
+		
+	</header>
+
+
+	<main role="main">
+		<article itemscope itemtype="http://schema.org/BlogPosting">
+			<h1 class="entry-title" itemprop="headline">Java 9 and Jigsaw improvements with &#39;jlink&#39;</h1>
+			<span class="entry-meta"><time itemprop="datePublished" datetime="2016-03-26">March 26, 2016</time></span>
+			<section itemprop="entry-text">
+				
+
+<p>It was <a href="https://twitter.com/mreinhold/status/713384458452226048">recently announced</a>
+that Java 9&rsquo;s latest builds now include the Project Jigsaw module system.  This
+is pretty awesome stuff, to be honest.  One of the benefits that a lot of
+systems-programming advocates claim is having a self-hosted runtime.  Being able
+to do that is at least feasable in Jigsaw, using the built-in <code>jlink</code> tool.</p>
+
+<p>I don&rsquo;t anticipate that it will completely replace the JDK for some
+applicaitons, but it brings in a whole new world of options.  Some features I&rsquo;m
+pretty interested in include:</p>
+
+<ul>
+<li>improved dynamic language</li>
+<li>pre-compilation</li>
+<li>selective runtime includes</li>
+<li>faster bootstrap/startup times, and</li>
+<li>likely a whole new host of self-bootstrapping desktop/server applications that
+don&rsquo;t need to worry nearly as much about having to roll in an entire runtime</li>
+</ul>
+
+<p>There are a lot of good resources that I scoured trying to build this, so I&rsquo;ll
+link to them here in case you&rsquo;d like to learn for yourself or just have some fun
+times digging around the docs:</p>
+
+<ul>
+<li><a href="http://mreinhold.org/blog/jigsaw-modular-images">Project Jigsaw: Modular run-time images</a></li>
+<li><a href="http://openjdk.java.net/projects/jigsaw/quick-start">Project Jigsaw: Module System Quick-Start Guide</a></li>
+<li><a href="https://jdk9.java.net/download/">JDK 9 Early Access Releases</a></li>
+<li><a href="https://www.youtube.com/watch?v=l1s7R85GF1A">Keynote Session: Mark Reinhold (covers Jigsaw)</a></li>
+</ul>
+
+<h2 id="getting-started-guide-for-jigsaw">Getting Started Guide for Jigsaw</h2>
+
+<p>Now that build 111+ has support for Jigsaw, we should be able to follow their
+<a href="http://openjdk.java.net/projects/jigsaw/quick-start">Module System Quick-Start Guide</a>
+and get things rolling.  I&rsquo;ve started out building this Quick-Start guide
+and have put it on GitHub: <a href="https://github.com/klauern/modularity">https://github.com/klauern/modularity</a> . I can&rsquo;t
+say that I have everything working, but I am pleased that things are working as
+smoothly as they are, considering this is&ndash;at best&ndash;an alpha release.</p>
+
+<h2 id="future-posts">Future Posts</h2>
+
+<p>I don&rsquo;t have everything in a demo-able state, but I&rsquo;m working on things and may
+have more to update as that above repository is updated.  Stay tuned.</p>
+
+			</section>
+		</article>
+	</main>
+
+
+	<footer role="contentinfo">
+		<div class="hr"></div>
+		<div class="footer-link">
+			
+			
+			
+			
+		</div>
+		<div class="copyright">Copyright &copy; 2016 Nick Klauer</div>
+	</footer>
+
+</div>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+</body>
+</html>
