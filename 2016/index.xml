@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>2016s on A Turn of Phrase</title>
+    <title>2016s on A Blog</title>
     <link>http://blog.nickklauer.info/2016/</link>
-    <description>Recent content in 2016s on A Turn of Phrase</description>
+    <description>Recent content in 2016s on A Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 13 Mar 2016 20:00:00 -0500</lastBuildDate>
@@ -86,7 +86,7 @@ Jörg&lt;/p&gt;
 painless, and gives you a lot in the way of structural analysis of the logs
 themselves.&lt;/p&gt;
 
-&lt;h2 id=&#34;using-gcviewer-for-log-parsing-as-an-api:7438d295e42f3b1a7142fe96c15ebf35&#34;&gt;Using GCViewer for Log Parsing as an API&lt;/h2&gt;
+&lt;h2 id=&#34;using-gcviewer-for-log-parsing-as-an-api&#34;&gt;Using GCViewer for Log Parsing as an API&lt;/h2&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;package klauern;
 
@@ -183,7 +183,7 @@ trying out new languages, the current language du jour is
 &lt;a href=&#34;https://golang.org&#34;&gt;Golang&lt;/a&gt;, so it seems like a reasonably interesting problem
 to solve in a library.&lt;/p&gt;
 
-&lt;h2 id=&#34;example-netgear-log-entries:dccc7fc9fcbc0b748d7e7a99db696914&#34;&gt;Example NetGear Log Entries&lt;/h2&gt;
+&lt;h2 id=&#34;example-netgear-log-entries&#34;&gt;Example NetGear Log Entries&lt;/h2&gt;
 
 &lt;p&gt;Parsing a log seems like a fun diversion, and looking at the NetGear log format,
 it seems apparent that there was little formality in how they even logged what
@@ -201,7 +201,7 @@ type and a dynamic piece of data.  Parsing this isn&amp;rsquo;t like parsing a r
 format, or at least, it has enough special rules that will make creating
 a parser a bit more work.&lt;/p&gt;
 
-&lt;h2 id=&#34;parsing-logs:dccc7fc9fcbc0b748d7e7a99db696914&#34;&gt;Parsing Logs&lt;/h2&gt;
+&lt;h2 id=&#34;parsing-logs&#34;&gt;Parsing Logs&lt;/h2&gt;
 
 &lt;p&gt;I struck out to solve this in a couple ways.  My first attempt was a very simple
 attempt to brute-force the log by &lt;code&gt;switch&lt;/code&gt;&amp;lsquo;ing on a prefix, using some kind
@@ -215,7 +215,7 @@ isn&amp;rsquo;t just &amp;lsquo;acceptable code duplication&amp;rsquo; due to th
 much in the way of abstraction.  That said, this works, and it throws everything
 I have given it into my generic &lt;code&gt;NetGear&lt;/code&gt; struct type.  Yay for progress.&lt;/p&gt;
 
-&lt;h2 id=&#34;go-s-parsing-strategies:dccc7fc9fcbc0b748d7e7a99db696914&#34;&gt;Go&amp;rsquo;s Parsing Strategies&lt;/h2&gt;
+&lt;h2 id=&#34;go-s-parsing-strategies&#34;&gt;Go&amp;rsquo;s Parsing Strategies&lt;/h2&gt;
 
 &lt;p&gt;After throwing together the above example, I started doing a bit more digging
 and trying to determine if there was a &amp;ldquo;Go Way&amp;rdquo; to do things.  This is where

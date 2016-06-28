@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>2015s on A Turn of Phrase</title>
+    <title>2015s on A Blog</title>
     <link>http://blog.nickklauer.info/2015/</link>
-    <description>Recent content in 2015s on A Turn of Phrase</description>
+    <description>Recent content in 2015s on A Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 29 Oct 2015 08:26:23 -0500</lastBuildDate>
@@ -17,7 +17,7 @@
       <guid>http://blog.nickklauer.info/2015/thoughts_on_go/</guid>
       <description>
 
-&lt;h1 id=&#34;learning-go:50ebbeb44ee3a6193481af0c7b0581a2&#34;&gt;Learning Go&lt;/h1&gt;
+&lt;h1 id=&#34;learning-go&#34;&gt;Learning Go&lt;/h1&gt;
 
 &lt;p&gt;I started wanting to write small applications that were portable
 and compatible with many platforms.  I have a lot of experience working with
@@ -41,7 +41,7 @@ say I had too many nightmares using it.
 That said, I am not necessarily impressed with the &lt;em&gt;language&lt;/em&gt;.  That&amp;rsquo;s not what
 drives me to use it, though.&lt;/p&gt;
 
-&lt;h1 id=&#34;the-platform-is-great:50ebbeb44ee3a6193481af0c7b0581a2&#34;&gt;The Platform is Great&lt;/h1&gt;
+&lt;h1 id=&#34;the-platform-is-great&#34;&gt;The Platform is Great&lt;/h1&gt;
 
 &lt;p&gt;One of the first things that I was drawn to was the ease in creating small,
 self-contained little applications.  I found things like
@@ -94,7 +94,7 @@ release an application quickly is due&amp;ndash;in part&amp;ndash;to the speed o
 a good job promoting the features of Go that make &lt;strong&gt;Go the Platform&lt;/strong&gt; better than
 &lt;strong&gt;Go the Language&lt;/strong&gt;.  With that said&amp;hellip;&lt;/p&gt;
 
-&lt;h1 id=&#34;the-language-is-not:50ebbeb44ee3a6193481af0c7b0581a2&#34;&gt;The Language is Not&lt;/h1&gt;
+&lt;h1 id=&#34;the-language-is-not&#34;&gt;The Language is Not&lt;/h1&gt;
 
 &lt;p&gt;I don&amp;rsquo;t think it&amp;rsquo;s necessary to rehash the arguments against the language.
 Plenty of people more experienced and knowledgable with Go have already done
@@ -148,7 +148,7 @@ enough attention&amp;ndash;is in &lt;a href=&#34;http://nomad.so/2015/03/why-gos
 feel it&amp;rsquo;s either not worth the time or simply adds too much &amp;ldquo;complexity&amp;rdquo; on some
 measurable complexity bar, just seems ridiculous.&lt;/p&gt;
 
-&lt;h1 id=&#34;so-which-language-do-you-use:50ebbeb44ee3a6193481af0c7b0581a2&#34;&gt;So which language do you use?&lt;/h1&gt;
+&lt;h1 id=&#34;so-which-language-do-you-use&#34;&gt;So which language do you use?&lt;/h1&gt;
 
 &lt;p&gt;When writing in Go, you realize that you&amp;rsquo;re writing code for the sake of
 compilation speed and concurrency.  The benefit of generating a self-contained,
@@ -218,7 +218,7 @@ nearly the same need for the concurrency features that Go provides, but I&amp;rs
 certain that the stepping-stone to getting there is to be able to create small,
 focused tools, adding concurrency as needed afterwards.&lt;/p&gt;
 
-&lt;h1 id=&#34;weblogic-restful-management-services:37b48de942ca676c4cd059402ad010ab&#34;&gt;WebLogic RESTful Management Services&lt;/h1&gt;
+&lt;h1 id=&#34;weblogic-restful-management-services&#34;&gt;WebLogic RESTful Management Services&lt;/h1&gt;
 
 &lt;p&gt;This isn&amp;rsquo;t exactly a &lt;strong&gt;new&lt;/strong&gt; feature of WebLogic server, but Oracle built in
 a set &lt;a href=&#34;http://docs.oracle.com/cd/E23943_01/web.1111/e24682/toc.htm#RESTS149&#34;&gt;of RESTful API&amp;rsquo;s&lt;/a&gt;
@@ -227,7 +227,7 @@ managed servers in a domain.  You can use whatever kind of tool to query this,
 like &lt;code&gt;curl&lt;/code&gt;, &lt;code&gt;wget&lt;/code&gt;, etc., but I thought it might be fun to try to wrap this
 into some kind of command-line tool.&lt;/p&gt;
 
-&lt;h1 id=&#34;enter-remy:37b48de942ca676c4cd059402ad010ab&#34;&gt;Enter Remy&lt;/h1&gt;
+&lt;h1 id=&#34;enter-remy&#34;&gt;Enter Remy&lt;/h1&gt;
 
 &lt;p&gt;That&amp;rsquo;s where I came up with the &lt;a href=&#34;https://github.com/klauern/remy&#34;&gt;Remy command-line
 application&lt;/a&gt;.  Remy is really
@@ -261,7 +261,7 @@ Flags:
 Use &amp;quot;remy [command] --help&amp;quot; for more information about a command.
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;querying:37b48de942ca676c4cd059402ad010ab&#34;&gt;Querying&lt;/h2&gt;
+&lt;h2 id=&#34;querying&#34;&gt;Querying&lt;/h2&gt;
 
 &lt;p&gt;All commands require some form of the &lt;code&gt;AdminUrl&lt;/code&gt;, &lt;code&gt;Password&lt;/code&gt; and &lt;code&gt;Username&lt;/code&gt;, in
 order to query an appropriate AdminServer instance.  This can be specified on
@@ -296,7 +296,7 @@ Java Ver:                  | OS Name:                       | OS Version:
 WLS Version:
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;configuration:37b48de942ca676c4cd059402ad010ab&#34;&gt;Configuration&lt;/h2&gt;
+&lt;h2 id=&#34;configuration&#34;&gt;Configuration&lt;/h2&gt;
 
 &lt;p&gt;Typing in the username, password, etc., on the command-line is not really the
 greatest way to solve the problem, and is very likely insecure, so we can do one
@@ -342,7 +342,7 @@ rudimentary for LDAP).  In that event, I&amp;rsquo;d be all for getting that sec
 Vault.  Although, I think that the &lt;a href=&#34;https://www.yubico.com/products/yubikey-hardware/&#34;&gt;FIDO U2F Yubikey&lt;/a&gt;
 is probably even cooler when you get down to it, but I digress.&lt;/p&gt;
 
-&lt;h1 id=&#34;source-code-information-and-errata:37b48de942ca676c4cd059402ad010ab&#34;&gt;Source Code, Information and Errata&lt;/h1&gt;
+&lt;h1 id=&#34;source-code-information-and-errata&#34;&gt;Source Code, Information and Errata&lt;/h1&gt;
 
 &lt;p&gt;I&amp;rsquo;ve really only touched the surface of this tool.  I think you should take
 a look at it yourself:&lt;/p&gt;
@@ -385,7 +385,7 @@ answer&lt;/a&gt;
 provided a great starting point for getting things going.  It was essentially
 the foundation for what you&amp;rsquo;ll see in this post.&lt;/p&gt;
 
-&lt;h1 id=&#34;parsing-the-keystore:ea83c6f13264b77e32b6387eb48f3ca8&#34;&gt;Parsing the Keystore&lt;/h1&gt;
+&lt;h1 id=&#34;parsing-the-keystore&#34;&gt;Parsing the Keystore&lt;/h1&gt;
 
 &lt;p&gt;To make this easy, I generally use the following libraries in most of my
 projects:&lt;/p&gt;
@@ -443,7 +443,7 @@ try {
 &lt;/code&gt;
 &lt;/pre&gt;
 
-&lt;h1 id=&#34;traversing-certificates-and-aliases:ea83c6f13264b77e32b6387eb48f3ca8&#34;&gt;Traversing Certificates and Aliases&lt;/h1&gt;
+&lt;h1 id=&#34;traversing-certificates-and-aliases&#34;&gt;Traversing Certificates and Aliases&lt;/h1&gt;
 
 &lt;p&gt;From this point, we&amp;rsquo;re able to read in and claim &lt;strong&gt;success&lt;/strong&gt;! Nah, not really.
 What do you want to do with this?  Well, in this case, our KeyStore will have
@@ -479,7 +479,7 @@ private static Map&lt;String, List&lt;Certificate&gt;&gt; getCertMap(KeyStore ks
 &lt;/code&gt;
 &lt;/pre&gt;
 
-&lt;h1 id=&#34;filtering:ea83c6f13264b77e32b6387eb48f3ca8&#34;&gt;Filtering&lt;/h1&gt;
+&lt;h1 id=&#34;filtering&#34;&gt;Filtering&lt;/h1&gt;
 
 &lt;p&gt;Another assumption being made here is that if you have a certificate that&amp;rsquo;s
 going to expire, it&amp;rsquo;s most likely an &lt;strong&gt;X.509&lt;/strong&gt; certificate, and so we only need
@@ -538,7 +538,7 @@ time and the expiration date.  I&amp;rsquo;d rather not worry about leap years, 
 calendar types, etc., when computing things, so let&amp;rsquo;s just let a great library
 do that for us.&lt;/p&gt;
 
-&lt;h1 id=&#34;summary:ea83c6f13264b77e32b6387eb48f3ca8&#34;&gt;Summary&lt;/h1&gt;
+&lt;h1 id=&#34;summary&#34;&gt;Summary&lt;/h1&gt;
 
 &lt;p&gt;I hope this overview of how to parse and compute expiration dates on
 certificates in your Keystore can be of some use.  It&amp;rsquo;s not hard, but half the

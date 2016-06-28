@@ -2,7 +2,7 @@
 <html lang="en-us">
 <head>
 <meta charset="utf-8">
-<meta name="generator" content="Hugo 0.15" />
+<meta name="generator" content="Hugo 0.17-DEV" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/ir_black.min.css">
 
@@ -12,8 +12,8 @@
 <link rel="stylesheet" href="/css/normalize.css">
 <link rel="stylesheet" href="/css/skeleton.css">
 <link rel="stylesheet" href="/css/custom.css">
-<link rel="alternate" href="/index.xml" type="application/rss+xml" title="A Turn of Phrase">
-<title>keystores and certificate expiration - A Turn of Phrase</title>
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="A Blog">
+<title>keystores and certificate expiration - A Blog</title>
 </head>
 <body>
 
@@ -51,7 +51,7 @@ answer</a>
 provided a great starting point for getting things going.  It was essentially
 the foundation for what you&rsquo;ll see in this post.</p>
 
-<h1 id="parsing-the-keystore:ea83c6f13264b77e32b6387eb48f3ca8">Parsing the Keystore</h1>
+<h1 id="parsing-the-keystore">Parsing the Keystore</h1>
 
 <p>To make this easy, I generally use the following libraries in most of my
 projects:</p>
@@ -109,7 +109,7 @@ try {
 </code>
 </pre>
 
-<h1 id="traversing-certificates-and-aliases:ea83c6f13264b77e32b6387eb48f3ca8">Traversing Certificates and Aliases</h1>
+<h1 id="traversing-certificates-and-aliases">Traversing Certificates and Aliases</h1>
 
 <p>From this point, we&rsquo;re able to read in and claim <strong>success</strong>! Nah, not really.
 What do you want to do with this?  Well, in this case, our KeyStore will have
@@ -145,7 +145,7 @@ private static Map<String, List<Certificate>> getCertMap(KeyStore ks) throws Key
 </code>
 </pre>
 
-<h1 id="filtering:ea83c6f13264b77e32b6387eb48f3ca8">Filtering</h1>
+<h1 id="filtering">Filtering</h1>
 
 <p>Another assumption being made here is that if you have a certificate that&rsquo;s
 going to expire, it&rsquo;s most likely an <strong>X.509</strong> certificate, and so we only need
@@ -204,7 +204,7 @@ time and the expiration date.  I&rsquo;d rather not worry about leap years, othe
 calendar types, etc., when computing things, so let&rsquo;s just let a great library
 do that for us.</p>
 
-<h1 id="summary:ea83c6f13264b77e32b6387eb48f3ca8">Summary</h1>
+<h1 id="summary">Summary</h1>
 
 <p>I hope this overview of how to parse and compute expiration dates on
 certificates in your Keystore can be of some use.  It&rsquo;s not hard, but half the
