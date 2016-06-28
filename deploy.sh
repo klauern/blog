@@ -3,7 +3,7 @@
 echo -e "\033[0;32mDeploying updates to GitHub...\033[0m"
 
 # Build the project.
-hugo -t "klauern-landing-page-hugo"
+hugo -t "klauern-hugo-zen"
 
 # Add changes to git.
 git add -A
