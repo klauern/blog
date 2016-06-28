@@ -6,8 +6,62 @@
     <description>Recent content on A Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 13 Mar 2016 20:00:00 -0500</lastBuildDate>
+    <lastBuildDate>Sat, 26 Mar 2016 13:01:51 -0500</lastBuildDate>
     <atom:link href="http://blog.nickklauer.info/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Java 9 and Jigsaw improvements with &#39;jlink&#39;</title>
+      <link>http://blog.nickklauer.info/2016/jdk-9-linker/</link>
+      <pubDate>Sat, 26 Mar 2016 13:01:51 -0500</pubDate>
+      
+      <guid>http://blog.nickklauer.info/2016/jdk-9-linker/</guid>
+      <description>
+
+&lt;p&gt;It was &lt;a href=&#34;https://twitter.com/mreinhold/status/713384458452226048&#34;&gt;recently announced&lt;/a&gt;
+that Java 9&amp;rsquo;s latest builds now include the Project Jigsaw module system.  This
+is pretty awesome stuff, to be honest.  One of the benefits that a lot of
+systems-programming advocates claim is having a self-hosted runtime.  Being able
+to do that is at least feasable in Jigsaw, using the built-in &lt;code&gt;jlink&lt;/code&gt; tool.&lt;/p&gt;
+
+&lt;p&gt;I don&amp;rsquo;t anticipate that it will completely replace the JDK for some
+applicaitons, but it brings in a whole new world of options.  Some features I&amp;rsquo;m
+pretty interested in include:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;improved dynamic language&lt;/li&gt;
+&lt;li&gt;pre-compilation&lt;/li&gt;
+&lt;li&gt;selective runtime includes&lt;/li&gt;
+&lt;li&gt;faster bootstrap/startup times, and&lt;/li&gt;
+&lt;li&gt;likely a whole new host of self-bootstrapping desktop/server applications that
+don&amp;rsquo;t need to worry nearly as much about having to roll in an entire runtime&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;There are a lot of good resources that I scoured trying to build this, so I&amp;rsquo;ll
+link to them here in case you&amp;rsquo;d like to learn for yourself or just have some fun
+times digging around the docs:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://mreinhold.org/blog/jigsaw-modular-images&#34;&gt;Project Jigsaw: Modular run-time images&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://openjdk.java.net/projects/jigsaw/quick-start&#34;&gt;Project Jigsaw: Module System Quick-Start Guide&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://jdk9.java.net/download/&#34;&gt;JDK 9 Early Access Releases&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=l1s7R85GF1A&#34;&gt;Keynote Session: Mark Reinhold (covers Jigsaw)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;getting-started-guide-for-jigsaw&#34;&gt;Getting Started Guide for Jigsaw&lt;/h2&gt;
+
+&lt;p&gt;Now that build 111+ has support for Jigsaw, we should be able to follow their
+&lt;a href=&#34;http://openjdk.java.net/projects/jigsaw/quick-start&#34;&gt;Module System Quick-Start Guide&lt;/a&gt;
+and get things rolling.  I&amp;rsquo;ve started out building this Quick-Start guide
+and have put it on GitHub: &lt;a href=&#34;https://github.com/klauern/modularity&#34;&gt;https://github.com/klauern/modularity&lt;/a&gt; . I can&amp;rsquo;t
+say that I have everything working, but I am pleased that things are working as
+smoothly as they are, considering this is&amp;ndash;at best&amp;ndash;an alpha release.&lt;/p&gt;
+
+&lt;h2 id=&#34;future-posts&#34;&gt;Future Posts&lt;/h2&gt;
+
+&lt;p&gt;I don&amp;rsquo;t have everything in a demo-able state, but I&amp;rsquo;m working on things and may
+have more to update as that above repository is updated.  Stay tuned.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>JVM GC Log Parsing</title>

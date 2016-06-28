@@ -1,6 +1,6 @@
 +++
 date = "2016-03-26T13:01:51-05:00"
-draft = true
+draft = false
 title = "Java 9 and Jigsaw improvements with 'jlink'"
 
 +++
@@ -13,10 +13,14 @@ to do that is at least feasable in Jigsaw, using the built-in `jlink` tool.
 
 I don't anticipate that it will completely replace the JDK for some
 applicaitons, but it brings in a whole new world of options.  Some features I'm
-pretty interested to see how things will go include improved dynamic language
-pre-compilation, selective runtime includes, faster bootstrap/startup times, and
-likely a whole new host of self-bootstrapping desktop/server applications that
-don't need to worry nearly as much about having to roll in an entire runtime.
+pretty interested in include:
+
+* improved dynamic language
+* pre-compilation
+* selective runtime includes
+* faster bootstrap/startup times, and
+* likely a whole new host of self-bootstrapping desktop/server applications that
+don't need to worry nearly as much about having to roll in an entire runtime
 
 There are a lot of good resources that I scoured trying to build this, so I'll
 link to them here in case you'd like to learn for yourself or just have some fun
@@ -28,16 +32,18 @@ times digging around the docs:
 - [Keynote Session: Mark Reinhold (covers Jigsaw)](https://www.youtube.com/watch?v=l1s7R85GF1A)
 
 
-## Building the Getting Started Guide for Jigsaw
+## Getting Started Guide for Jigsaw
 
-Now that build 111 has support for Jigsaw, we should be able to follow their
+Now that build 111+ has support for Jigsaw, we should be able to follow their
 [Module System Quick-Start Guide](http://openjdk.java.net/projects/jigsaw/quick-start)
 and get things rolling.  I've started out building this Quick-Start guide
 and have put it on GitHub: https://github.com/klauern/modularity . I can't
 say that I have everything working, but I am pleased that things are working as
 smoothly as they are, considering this is--at best--an alpha release.
 
-### 
+## Future Posts
 
+I don't have everything in a demo-able state, but I'm working on things and may
+have more to update as that above repository is updated.  Stay tuned.
 
 
