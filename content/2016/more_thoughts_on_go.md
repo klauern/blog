@@ -1,9 +1,8 @@
 +++
-date = "2016-01-18T18:30:32-06:00"
-draft = true
-title = "More Thoughts on Go"
+date = "2016-06-27T18:52:47-05:00"
+slug = ""
+tags = ["", ""]
+title = "more_thoughts_on_go"
 
 +++
 
-I find myself going back to Go whenever I'm playing with a new project.  I don't
-know whether it's because it's /the new hotness/-effect, or 

@@ -2,7 +2,7 @@
 <html lang="en-us">
 <head>
 <meta charset="utf-8">
-<meta name="generator" content="Hugo 0.15" />
+<meta name="generator" content="Hugo 0.17-DEV" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/ir_black.min.css">
 
@@ -12,8 +12,8 @@
 <link rel="stylesheet" href="/css/normalize.css">
 <link rel="stylesheet" href="/css/skeleton.css">
 <link rel="stylesheet" href="/css/custom.css">
-<link rel="alternate" href="/index.xml" type="application/rss+xml" title="A Turn of Phrase">
-<title>Remy - RESTful client for WebLogic Servers - A Turn of Phrase</title>
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="A Blog">
+<title>Remy - RESTful client for WebLogic Servers - A Blog</title>
 </head>
 <body>
 
@@ -45,7 +45,7 @@ nearly the same need for the concurrency features that Go provides, but I&rsquo;
 certain that the stepping-stone to getting there is to be able to create small,
 focused tools, adding concurrency as needed afterwards.</p>
 
-<h1 id="weblogic-restful-management-services:37b48de942ca676c4cd059402ad010ab">WebLogic RESTful Management Services</h1>
+<h1 id="weblogic-restful-management-services">WebLogic RESTful Management Services</h1>
 
 <p>This isn&rsquo;t exactly a <strong>new</strong> feature of WebLogic server, but Oracle built in
 a set <a href="http://docs.oracle.com/cd/E23943_01/web.1111/e24682/toc.htm#RESTS149">of RESTful API&rsquo;s</a>
@@ -54,7 +54,7 @@ managed servers in a domain.  You can use whatever kind of tool to query this,
 like <code>curl</code>, <code>wget</code>, etc., but I thought it might be fun to try to wrap this
 into some kind of command-line tool.</p>
 
-<h1 id="enter-remy:37b48de942ca676c4cd059402ad010ab">Enter Remy</h1>
+<h1 id="enter-remy">Enter Remy</h1>
 
 <p>That&rsquo;s where I came up with the <a href="https://github.com/klauern/remy">Remy command-line
 application</a>.  Remy is really
@@ -88,7 +88,7 @@ Flags:
 Use &quot;remy [command] --help&quot; for more information about a command.
 </code></pre>
 
-<h2 id="querying:37b48de942ca676c4cd059402ad010ab">Querying</h2>
+<h2 id="querying">Querying</h2>
 
 <p>All commands require some form of the <code>AdminUrl</code>, <code>Password</code> and <code>Username</code>, in
 order to query an appropriate AdminServer instance.  This can be specified on
@@ -123,7 +123,7 @@ Java Ver:                  | OS Name:                       | OS Version:
 WLS Version:
 </code></pre>
 
-<h2 id="configuration:37b48de942ca676c4cd059402ad010ab">Configuration</h2>
+<h2 id="configuration">Configuration</h2>
 
 <p>Typing in the username, password, etc., on the command-line is not really the
 greatest way to solve the problem, and is very likely insecure, so we can do one
@@ -169,7 +169,7 @@ rudimentary for LDAP).  In that event, I&rsquo;d be all for getting that secret 
 Vault.  Although, I think that the <a href="https://www.yubico.com/products/yubikey-hardware/">FIDO U2F Yubikey</a>
 is probably even cooler when you get down to it, but I digress.</p>
 
-<h1 id="source-code-information-and-errata:37b48de942ca676c4cd059402ad010ab">Source Code, Information and Errata</h1>
+<h1 id="source-code-information-and-errata">Source Code, Information and Errata</h1>
 
 <p>I&rsquo;ve really only touched the surface of this tool.  I think you should take
 a look at it yourself:</p>

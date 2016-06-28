@@ -3,6 +3,7 @@ languageCode = "en-us"
 title = "A Blog"
 pygmentsuseclasses="false"
 pygmentsstyle = "native"
+theme = "klauern-hugo-zen"
 
 [params]
 copyright = "2016 Nick Klauer"

@@ -2,7 +2,7 @@
 <html lang="en-us">
 <head>
 <meta charset="utf-8">
-<meta name="generator" content="Hugo 0.15" />
+<meta name="generator" content="Hugo 0.17-DEV" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/ir_black.min.css">
 
@@ -12,8 +12,8 @@
 <link rel="stylesheet" href="/css/normalize.css">
 <link rel="stylesheet" href="/css/skeleton.css">
 <link rel="stylesheet" href="/css/custom.css">
-<link rel="alternate" href="/index.xml" type="application/rss+xml" title="A Turn of Phrase">
-<title>Playing with NetGear Router Logs - A Turn of Phrase</title>
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="A Blog">
+<title>Playing with NetGear Router Logs - A Blog</title>
 </head>
 <body>
 
@@ -42,7 +42,7 @@ trying out new languages, the current language du jour is
 <a href="https://golang.org">Golang</a>, so it seems like a reasonably interesting problem
 to solve in a library.</p>
 
-<h2 id="example-netgear-log-entries:dccc7fc9fcbc0b748d7e7a99db696914">Example NetGear Log Entries</h2>
+<h2 id="example-netgear-log-entries">Example NetGear Log Entries</h2>
 
 <p>Parsing a log seems like a fun diversion, and looking at the NetGear log format,
 it seems apparent that there was little formality in how they even logged what
@@ -60,7 +60,7 @@ type and a dynamic piece of data.  Parsing this isn&rsquo;t like parsing a regul
 format, or at least, it has enough special rules that will make creating
 a parser a bit more work.</p>
 
-<h2 id="parsing-logs:dccc7fc9fcbc0b748d7e7a99db696914">Parsing Logs</h2>
+<h2 id="parsing-logs">Parsing Logs</h2>
 
 <p>I struck out to solve this in a couple ways.  My first attempt was a very simple
 attempt to brute-force the log by <code>switch</code>&lsquo;ing on a prefix, using some kind
@@ -74,7 +74,7 @@ isn&rsquo;t just &lsquo;acceptable code duplication&rsquo; due to the nature of 
 much in the way of abstraction.  That said, this works, and it throws everything
 I have given it into my generic <code>NetGear</code> struct type.  Yay for progress.</p>
 
-<h2 id="go-s-parsing-strategies:dccc7fc9fcbc0b748d7e7a99db696914">Go&rsquo;s Parsing Strategies</h2>
+<h2 id="go-s-parsing-strategies">Go&rsquo;s Parsing Strategies</h2>
 
 <p>After throwing together the above example, I started doing a bit more digging
 and trying to determine if there was a &ldquo;Go Way&rdquo; to do things.  This is where
