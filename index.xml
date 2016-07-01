@@ -6,8 +6,49 @@
     <description>Recent content on A Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 26 Mar 2016 13:01:51 -0500</lastBuildDate>
+    <lastBuildDate>Wed, 29 Jun 2016 19:47:15 -0500</lastBuildDate>
     <atom:link href="http://blog.nickklauer.info/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Java 9 Modularity Features</title>
+      <link>http://blog.nickklauer.info/2016/jlinker-demo/</link>
+      <pubDate>Wed, 29 Jun 2016 19:47:15 -0500</pubDate>
+      
+      <guid>http://blog.nickklauer.info/2016/jlinker-demo/</guid>
+      <description>
+
+&lt;h1 id=&#34;modularity-in-the-jvm&#34;&gt;Modularity in the JVM&lt;/h1&gt;
+
+&lt;p&gt;I spent some time yesterday playing with the demos for the &lt;a href=&#34;http://openjdk.java.net/projects/jigsaw/quick-start&#34;&gt;Jigsaw Project&lt;/a&gt;,
+and have something that I hope is usable for others:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/klauern/modularity&#34;&gt;github.com/klauern/modularity&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I haven&amp;rsquo;t yet tried it on a Windows machine, but that&amp;rsquo;s next on my list.  Each
+of the examples in the Jigsaw Quick Start have an associated &lt;code&gt;run.sh&lt;/code&gt; script
+that will build the example.  I haven&amp;rsquo;t done much documenting, but I do suggest
+that if you&amp;rsquo;re looking at these examples, you follow along with the
+documentation.  It&amp;rsquo;s pretty good, and does a much better job explaining the
+steps than I can.&lt;/p&gt;
+
+&lt;h2 id=&#34;jlinker-sizes&#34;&gt;JLinker sizes&lt;/h2&gt;
+
+&lt;p&gt;The biggest reason I wanted to play with the Jigsaw features was to see how the
+&lt;code&gt;jlink&lt;/code&gt;er worked in terms of generating a self-contained JVM+runnable app.  I&amp;rsquo;m
+pretty happy with it, and think that it&amp;rsquo;s pretty slick, all things considered.
+The downside is just the size.  I&amp;rsquo;m sure that it&amp;rsquo;s a massive effort to slim down
+the JVM to what is absolutely needed to run the code you have, but the smallest
+example I could run on my MacBook Air was around ~33MB.  That&amp;rsquo;s pretty good, but
+still pretty large (at least compared to a similarly-written Golan project).
+I think that things are probably trending even further downward, so I wouldn&amp;rsquo;t
+be surprised to see further interations of this slim it down further, or even
+finding some excited hackers able to shrink it even further themselves.  At this
+point, I&amp;rsquo;m really hopeful, and think that this is a pretty nice addition the
+JVM.  More competition is always a good thing.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Java 9 and Jigsaw improvements with &#39;jlink&#39;</title>
