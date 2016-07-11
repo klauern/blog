@@ -1,8 +1,9 @@
 +++
-date = "2016-07-10T17:10:22-05:00"
+date = "2016-07-10T17:10:00+00:00"
+draft = true
 slug = ""
 tags = ["benefits", "military"]
-title = "How does for Military"
+title = "Company Benefits for Drilling Military Reservists"
 
 +++
 *...or why companies prefer you only live and breathe their job*
