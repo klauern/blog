@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8">
+<meta name="generator" content="Hugo 0.17-DEV" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/ir_black.min.css">
+
+<script src="js/highlight.pack.js"</script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link href="http://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="/css/normalize.css">
+<link rel="stylesheet" href="/css/skeleton.css">
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="A Blog">
+<title>Trackello - A Blog</title>
+</head>
+<body>
+
+<div class="container">
+
+	<header role="banner">
+		<div class="header-logo">
+			<a href="/"><img src="https://s.gravatar.com/avatar/76c55292df5e9df9042eaf89ac35954b?s=80" width="60" height="60"></a>
+		</div>
+		
+	</header>
+
+
+	<main role="main">
+		<article itemscope itemtype="http://schema.org/BlogPosting">
+			<h1 class="entry-title" itemprop="headline">Trackello</h1>
+			<span class="entry-meta"><time itemprop="datePublished" datetime="2016-07-01">July 01, 2016</time></span>
+			<section itemprop="entry-text">
+				
+
+<h1 id="trello-s-api-and-golang">Trello&rsquo;s API and Golang</h1>
+
+<p>Among some of <a href="/2016/netgearlogs">my</a> <a href="/2015/announcing_remy">earlier</a> <a href="/2015/thoughts_on_go">posts</a>, I&rsquo;ve been looking towards Golang
+as a tool for building some more command-line apps.  To better understand how to
+use it for HTTP-based client work, I wanted to build a small command-line app to
+work with the <a href="https://developers.trello.com/">Trello API</a>.  When working with it, I found a really excellent
+Golang API for the Trello API here: <a href="https://github.com/VojtechVitek/go-trello">https://github.com/VojtechVitek/go-trello</a></p>
+
+<h1 id="trackello">Trackello</h1>
+
+<p>Recently, my boss wanted to get a bi-weekly update of projects, tasks, and
+things I&rsquo;ve been working on.  This was more for him to have an idea what I was
+putting my time into, as well as having evidence for promotions, bonuses, etc.
+I track most of my work using Trello, so this seemed a perfect opportunity to
+pull all of this information out using the built-in <a href="https://developers.trello.com/">Trello API</a> that they so
+wonderfully provided us users.</p>
+
+<p>Thus, let us introduce to the audience, <a href="https://github.com/klauern/trackello/">Trackello</a>, a CLI to track your
+work:</p>
+
+<pre><code class="language-sh">Trackello is a command-line tool to allow you to retrieve and get
+information on your Trello boards.  This tool provides a list
+of the previous 14 days of information on a board defined in
+your 'config' file (see '--config' flag for info
+
+Usage:
+  trackello [command]
+
+Available Commands:
+  boards      List all of your boards
+  cards       List all of the cards on a particular board.
+  config      Configure your Trello API keys and preferred Trello Board
+  list        List activities on a board
+
+Flags:
+      --appkey string   Trello Application Key
+      --board string    Preferred Board ID
+      --config string   config file (default is $HOME/.trackello.yaml)
+  -h, --help            help for trackello
+      --token string    Trello Token
+
+Use &quot;trackello [command] --help&quot; for more information about a command.
+</code></pre>
+
+<h1 id="configuration">Configuration</h1>
+
+<p>To talk to the Trello API, you need two pieces:</p>
+
+<ul>
+<li>Trello APP key</li>
+<li>Trello Token</li>
+</ul>
+
+<p>To get both of these, go to <a href="https://trello.com/app-key">https://trello.com/app-key</a> .  You can get both the
+Application key and a personal Token.  For my first iteration of this program, I
+assumed you would want to get information for <strong>one</strong> Trello board, which would
+be your /preferred/ board.  This is not required for normal use, but makes things
+easier.</p>
+
+<p>As always, the command-line options can help here:</p>
+
+<pre><code>$ trackello help config
+Using config file: /&lt;your_home_dir&gt;/.trackello.yaml
+To communicate to a Trello API, you will need to configure a
+minimum of 3 parameters:
+  - TRELLO_APPKEY
+  - TRELLO_TOKEN
+  - preferredBoard
+
+If you do not know or have any of these, you can review  the documentation
+on this site: https://trello.com/app-key
+
+Usage:
+  trackello config [flags]
+
+Global Flags:
+      --appkey string   Trello Application Key
+      --board string    Preferred Board ID
+      --config string   config file (default is $HOME/.trackello.yaml)
+      --token string    Trello Token
+</code></pre>
+
+<p>If you call this command and pass in the Global Flags, you will get
+a <code>trackello.yaml</code> file that has your configuration in it:</p>
+
+<pre><code class="language-yaml">$ cat ~/.trackello.yaml
+appkey: f3ff39c83d227a7243abf4df66ffffff
+token: b448d5fb4f1af85f3fffffffffffffffffffffffffffffffffffffffffffffff
+board: 572ffff7ffffffffffffff83
+</code></pre>
+
+<h1 id="listing-a-specific-board-s-actions">Listing A Specific Board&rsquo;s Actions</h1>
+
+<p>By default, the <code>trackello list</code> command will show you a listing of all board
+actions that occured in the last two weeks:</p>
+
+<pre><code class="language-sh">
+</code></pre>
+
+<h1 id="listing-all-boards">Listing All Boards</h1>
+
+<p>Further, you can also list all of your boards using <code>trackello boards</code></p>
+
+			</section>
+		</article>
+	</main>
+
+
+	<footer role="contentinfo">
+		<div class="hr"></div>
+		<div class="footer-link">
+			
+			
+			
+			
+		</div>
+		<div class="copyright">Copyright &copy; 2016 Nick Klauer</div>
+	</footer>
+
+</div>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+</body>
+</html>
