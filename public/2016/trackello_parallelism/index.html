@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8">
+<meta name="generator" content="Hugo 0.17-DEV" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/ir_black.min.css">
+
+<script src="js/highlight.pack.js"</script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link href="http://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="/css/normalize.css">
+<link rel="stylesheet" href="/css/skeleton.css">
+<link rel="stylesheet" href="/css/custom.css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="A Blog">
+<title>Adding Formatting and Parallelism - A Blog</title>
+</head>
+<body>
+
+<div class="container">
+
+	<header role="banner">
+		<div class="header-logo">
+			<a href="/"><img src="https://s.gravatar.com/avatar/76c55292df5e9df9042eaf89ac35954b?s=80" width="60" height="60"></a>
+		</div>
+		
+	</header>
+
+
+	<main role="main">
+		<article itemscope itemtype="http://schema.org/BlogPosting">
+			<h1 class="entry-title" itemprop="headline">Adding Formatting and Parallelism</h1>
+			<span class="entry-meta"><time itemprop="datePublished" datetime="2016-07-19">July 19, 2016</time></span>
+			<section itemprop="entry-text">
+				
+
+<h1 id="improved-formatting-in-trackello">Improved Formatting in Trackello</h1>
+
+<p>I&rsquo;ve been using my <a href="https://github.com/klauern/trackello">trackello</a> app for
+a few weeks and I do like the way I can keep track of my work.  However, some of
+the things I was curious about were more specific to the card.  If you&rsquo;ve used
+this application, you may have noticed that activity is marked by repeated
+entries of the same card.  This is just messy, and not something that I thought
+would be usable if you had a particularly busy week.</p>
+
+<p>To remedy this, I set about fixing it up with some additional fields:</p>
+
+<p><img src="/img/trackello_colorized.png" alt="trackello" title="Trackello with statistics" /></p>
+
+<p>Specifically, I added a placeholder for some general-purpose statistics:</p>
+
+<p><img src="/img/trackello_statistics.png" alt="statistics" title="Statistics in Trackello" /></p>
+
+<p>I don&rsquo;t have a very solid setup for how I want to layer this out at this time,
+but it provides a lot more information for a particular card than before.  Now,
+with a quick glance you can get a rough estimate on how much you&rsquo;ve been
+fiddling with a particular card.</p>
+
+<h1 id="parallelism">Parallelism</h1>
+
+<p>Once I added this in, I had to make some changes in terms of collecting the
+actions for a board and being able to parse it out.  For whatever reason, I was
+initially going about it in a very naive way, requesting a card or list for
+<strong>every</strong> action that I had.  This resulted in a couple issues off the bat:</p>
+
+<ol>
+<li>Many actions result in many HTTP requests</li>
+<li>Duplicating the same <code>HTTP GET</code> for the same card multiple times was
+redundant.</li>
+<li>Each call was done in succession of the previous one, in order.</li>
+</ol>
+
+<p>I first attempted to at least simplify how many calls I was making, ensuring
+I was only making calls when I needed new information (such as a new Card that
+I had not yet encountered).  However, that didn&rsquo;t really speed things up, and
+I found that it would wait 20-30 seconds just to return a Board&rsquo;s Actions.</p>
+
+<p>Next, I pursued one of the things that Go is known for&ndash;easy parallelism with
+Goroutines.  I am not an expert in this stuff, but managed to wing it somehow.</p>
+
+<p>Using parallelism in Go is a lot easier than I intially thought it would be.
+That isn&rsquo;t to say it&rsquo;s not fraught with concurrency issues, but it seems that
+the scope of the issues is contained well enough that you can work out a lot of
+the things that I used to get hung up on for DAYS with Java Threads and
+concurrency there.</p>
+
+<p>I don&rsquo;t have a quick comparison, but the performance improvement is noticable
+off the bat, so I&rsquo;m pretty confident in sticking with this.</p>
+
+<h1 id="future-work">Future work</h1>
+
+<p>I want to use this framework and library as the basis for something a little
+more interesting.  I know that Trello is great for building a lot of different
+kinds of sites, and one thing that I was really interested in is how <a href="https://changelog.com">The
+Changelog</a> uses Trello to build their weekly email.
+I figure I can probably build something similar in Go and share it with the
+world.  I don&rsquo;t know if there&rsquo;s another project out there for it, but I haven&rsquo;t
+yet been able to find one, so there&rsquo;s an opening.</p>
+
+			</section>
+		</article>
+	</main>
+
+
+	<footer role="contentinfo">
+		<div class="hr"></div>
+		<div class="footer-link">
+			
+			
+			
+			
+		</div>
+		<div class="copyright">Copyright &copy; 2016 Nick Klauer</div>
+	</footer>
+
+</div>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+</body>
+</html>
