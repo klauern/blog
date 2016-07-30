@@ -1,6 +1,6 @@
 +++
 date = "2016-07-10T17:10:00+00:00"
-draft = true
+draft = false
 slug = ""
 tags = ["benefits", "military"]
 title = "Company Benefits for Drilling Military Reservists"
@@ -185,8 +185,3 @@ there, and doubly so when you may have to hire someone to backfill for when
 you're out.  However, I think you hired the person because of their skills and
 ability, so you should recognize that you're essentially paying a small tax on
 the benefit of having someone of that calibur working with your company.
-
-# What you can do
-
-I hope that I've outlined 
-
