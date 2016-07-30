@@ -1,8 +1,8 @@
 +++
 date = "2016-08-12T20:28:07-05:00"
-draft = false
+draft = true
 title = "Moving \"Up\" into Leadership"
-
+publishdate = "2016-08-13T12:00:00-05:00"
 +++
 
 # Moving into Leadership
