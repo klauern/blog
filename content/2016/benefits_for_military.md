@@ -6,7 +6,7 @@ tags = ["benefits", "military"]
 title = "Company Benefits for Drilling Military Reservists"
 
 +++
-*...or why companies prefer you only live and breathe their job*
+*The case for supporting your military with more than a yellow ribbon*
 
 Many companies make a point to mention all of their benefits, touting how they
 are 'among the best', or have 'a competitive benefits package'.  This might be
