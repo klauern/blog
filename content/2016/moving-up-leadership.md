@@ -25,7 +25,7 @@ the ability to move up a technical or manager track, but in many organizations,
 they either don't have that, or aren't large enough to keep both tracks.  In the
 latter event, you find that you're faced with a tough choice in terms of career
 development and/or salary:  do I change jobs?  Do I move up to management to get
-that next big pay raise?  
+that next big pay raise?
 
 I'm willing to be that for most, it's something that you work your way up to.
 Once you reach a pinnacle of what a company or organization is able to provide
@@ -34,9 +34,9 @@ challenges being not technical, but social.
 
 # Leadership Skills
 
-A leader is someone that is expected to both 
+A leader is someone that is expected to both
 
-1) know his team's technical issues 
+1) know his team's technical issues
 2) ...as well as their personal ones.
 3) and is able to help them solve/resolve both
 
@@ -54,7 +54,7 @@ position you probably held before.
 What bothers me the most about promotions is that when we promote someone to
 a position of leadership, they seldom have the tools to take on all the added
 complexity of interacting with people and the social, and interpersonal aspects
-of leading.  
+of leading.
 
 This can be fixed with training, counseling, and regular interaction and
 guidance, but I don't think it's dealt with well-enough.
