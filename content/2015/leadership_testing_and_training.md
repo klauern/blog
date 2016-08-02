@@ -1,5 +1,5 @@
 +++
-date = "2015-10-19T17:16:30-05:00"
+date = "2016-10-19T17:16:30-05:00"
 draft = true
 title = "Leadership - Testing and Training"
 
@@ -19,8 +19,10 @@ finding and training leaders than I think almost any other place does.  The
 demands of a military officer, be it an Airman, Sailor, Marine, or Soldier are
 all based on the understanding that by NOT being able to lead, you can cause
 incomparable loss.  Making a poor choice as a Soldier in the field has life or
-death consequences.  I can't say that I have ever seen any corporate setting
-have nearly that kind of consequence.
+death consequences.  It's probably safe to say that most corporate jobs don't
+have this concern.  There just aren't a lot of positions in Corporate America
+where a bad decision is so directly responsible for death.  It's out there, but
+it's been subverted and avoided like 
 
 All that said, the military officer programs in most branches are designed to
 test your decision making skills, push your mind and body to their physical
