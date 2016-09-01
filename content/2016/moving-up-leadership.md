@@ -36,9 +36,9 @@ challenges being not technical, but social.
 
 A leader is someone that is expected to both
 
-1) know his team's technical issues
-2) ...as well as their personal ones.
-3) and is able to help them solve/resolve both
+1. know his team's technical issues
+2. ...as well as their personal ones.
+3. and is able to help them solve/resolve both
 
 You usually end up with a lot more work on your plate, with little more than
 a title.  You have to do things to earn Respect, Trust, Confidence, and all

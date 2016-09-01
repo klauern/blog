@@ -1,6 +1,6 @@
 +++
 date = "2016-09-01T18:20:48-05:00"
-draft = true
+draft = false
 publishdate = "2016-09-02T12:00:00-05:00"
 slug = ""
 tags = ["", ""]
@@ -13,44 +13,55 @@ an old, or legacy file format and copy it over to another system.  The end goal
 being that you would write some kind of parser on the receiving end of this file
 to take and ingest that format in.
 
-This is your Poor Man's
-Service Oriented Architecture, where systems either don't have integration
-endpoints, or the work to implement all of those are deemed too difficult and/or
-hard.  I don't fault anyone for being thrown in this pit of non-web services'
-integration, but if you choose to go this route, you must be aware of several
-considerations.
+This is your Poor Man's Service Oriented Architecture, where systems either
+don't have integration endpoints, or the work to implement all of those are
+deemed too difficult and/or time consuming.  I don't fault anyone for wanting to
+keep an old system alive (ROI is a powerful thing when it works), but having
+been thrown in this pit of non-web services' integration, you must be aware of
+several considerations.
 
 # Timing Guarantees, Missed Arrivals, Late Deliveries, etc.
 
 If you implement any form of `cron`-based scheduling, you need to keep a very
-clear set of contingencies in place for any of the following issues:
+clearly defined processes to handle contingencies in any of the following
+issues:
 
 1. Failed Job Runs
 2. Missed Delivery Timeframes
 3. Late Delivery
 4. Duplicate Delivery
 
-Any of which can create mountains of trouble for you and your system.  How you
-go about verifying any of the above is somewhat dependent on the use-case of the
-system and the requirements that are being fulfilled.
+Any one of which can create mountains of trouble for you and your system.  How
+you go about verifying any of the above is somewhat dependent on the use-case of
+the system and the requirements that are being fulfilled.
 
 ## Failed Job Runs
 
-For failures, you'll need an alerting system to ensure you will able to notify
-and/or automatically recover any failed job runs.  Scheduling these runs can be
-tricky, and there are who-knows-how-many systems out there that can provide some
-kind of scheduling toolkit for you to use.  Aim for the automatic if possible,
-as it's always faster for the system to automatically retry than for you to try
-to do it at 2 or 3 in the morning (these jobs never fail at 9AM or after your
-second cup of coffee).
+For failures, you'll **need** an alerting system to provide at least some
+guarantee that you'll know when things need to be recovered or automatically
+retried.  Scheduling a re-run of failed jobs has it's own issues, and there are
+who-knows-how-many systems out there that can provide some kind of scheduling
+toolkit for you to use.  Aim for the automatic if possible, as it's always
+faster for the system to retry for you than have you try to do it at 2AM or 3AM
+in the morning (these jobs never fail at 9AM or after your second cup of
+coffee).
 
 ## Late Delivery
+
+There's really two forms of this error--early and late delivery.  I have seldom
+seen a system that had a problem with early delivery, and if it happens, it
+usually just means the data isn't completely available or full.  I would like to
+focus on Late Delivery, however, as that seems much more commonplace.
 
 Late delivery can mean a lot of things for a system, such as not being able to
 send a shipment out on time, not getting bills paid within some kind of Service
 Level Guarantee, or even automatically kickstarting some backup or redundancy
-process that will attempt to re-run your job or re-process things.  This leads
-to the next point.
+processes that will attempt to re-run your job or re-process things.
+
+The difficulty in late- or long-running processes is knowing what will occur
+that way.  In a future post, I'll prescribe some methods to identify and fix
+these issues.  For now, it's important to just be aware of this situation when
+debugging or developing an integration/file transfer.
 
 ## Duplicate Entry
 
@@ -62,15 +73,14 @@ form of:
     --Add $20 to account X
     --Subtract $100 from account X
 
-and you re-process this data, you're definitely going to have a bad day when
+and you re-process this data again and again, you're going to have a bad day when
 someone calls in to say that they lost all their money, or **nobody** calls in
 when they somehow accidentally got $$$$$'s of dollars without notice.
 
 You need to build in some kind of tolerance for this, and hopefully that can be
-encoded in the file you're processing.  The ideal goal is that re-processing is
-at worst a wasted effort, but no harm as it is just overwriting the same 1's and
-0's with the same 1's and 0's.  That can't always be the case, but it should be
-strived for.
+encoded in the file you're processing.  The ideal goal should be to make
+re-processing-- at worst--a wasted effort, and at best, no processing at all.
+That can't always be the case, but it should be strived for.
 
 # Verification and Validation
 
@@ -83,13 +93,17 @@ Verification is the act of assuring that the file you're looking at came from
 the person or system you expected it to.  In broad terms, you should encrypt
 files at rest, **always**.  This isn't going to cover everything, however,
 because while it may prevent a man-in-the-middle attacker from subverting and/or
-muck with your system data, it doesn't prevent that same person from encrypting
-a completely different file that shouldn't be processed at all.
+mucking with your system data, it doesn't preclude a user from using a public
+key to drop something else they'd like you to process, which shouldn't be
+processed at all.
 
 If you choose to encrypt the file, you better be using some form of Digital
 Signature.  It's about the only means you have to verify that the person that
 encrypted it was the person you wanted to get the file from.  I am not terribly
-strong on this front, so I might be off-base.
+strong on this front, so I don't have a lot of details on this, but it's
+something that's getting a lot more attention with sites like
+[Keybase.io]( https://keybase.io ) and the general trend of using [GPG-signed
+commits, a la, GitHub]( https://github.com/blog/2144-gpg-signature-verification ).
 
 ## Validation
 
@@ -117,7 +131,7 @@ inevitably bundling up as much as you can in that file, turning what would have
 been a bunch of service calls into one massive file for import.  Now your
 problem is compounded by having to not just be valid on the row or record-level,
 but valid at the entire boundary of the file.  What happens if it's incorrect?
-can you parse it out to find out where it broke?  How do you know the next file
+Can you parse it out to find out where it broke?  How do you know the next file
 will be correct?  Is there a way to reproduce the issue?
 
 I suggest that if you find yourself using file-based transfer systems a lot,
