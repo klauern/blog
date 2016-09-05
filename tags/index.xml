@@ -6,8 +6,300 @@
     <description>Recent content on A Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 Jul 2016 16:25:21 -0500</lastBuildDate>
+    <lastBuildDate>Thu, 01 Sep 2016 18:20:48 -0500</lastBuildDate>
     <atom:link href="http://blog.nickklauer.info/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Managed File Transfer Shenanigans</title>
+      <link>http://blog.nickklauer.info/2016/managed_file_transfer_shenanigans/</link>
+      <pubDate>Thu, 01 Sep 2016 18:20:48 -0500</pubDate>
+      
+      <guid>http://blog.nickklauer.info/2016/managed_file_transfer_shenanigans/</guid>
+      <description>
+
+&lt;p&gt;An approach in integrating two systems which I see pretty regularly is to take
+an old, or legacy file format and copy it over to another system.  The end goal
+being that you would write some kind of parser on the receiving end of this file
+to take and ingest that format in.&lt;/p&gt;
+
+&lt;p&gt;This is your Poor Man&amp;rsquo;s Service Oriented Architecture, where systems either
+don&amp;rsquo;t have integration endpoints, or the work to implement all of those are
+deemed too difficult and/or time consuming.  I don&amp;rsquo;t fault anyone for wanting to
+keep an old system alive (ROI is a powerful thing when it works), but having
+been thrown in this pit of non-web services&amp;rsquo; integration, you must be aware of
+several considerations.&lt;/p&gt;
+
+&lt;h1 id=&#34;timing-guarantees-missed-arrivals-late-deliveries-etc&#34;&gt;Timing Guarantees, Missed Arrivals, Late Deliveries, etc.&lt;/h1&gt;
+
+&lt;p&gt;If you implement any form of &lt;code&gt;cron&lt;/code&gt;-based scheduling, you need to keep a very
+clearly defined processes to handle contingencies in any of the following
+issues:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Failed Job Runs&lt;/li&gt;
+&lt;li&gt;Missed Delivery Timeframes&lt;/li&gt;
+&lt;li&gt;Late Delivery&lt;/li&gt;
+&lt;li&gt;Duplicate Delivery&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Any one of which can create mountains of trouble for you and your system.  How
+you go about verifying any of the above is somewhat dependent on the use-case of
+the system and the requirements that are being fulfilled.&lt;/p&gt;
+
+&lt;h2 id=&#34;failed-job-runs&#34;&gt;Failed Job Runs&lt;/h2&gt;
+
+&lt;p&gt;For failures, you&amp;rsquo;ll &lt;strong&gt;need&lt;/strong&gt; an alerting system to provide at least some
+guarantee that you&amp;rsquo;ll know when things need to be recovered or automatically
+retried.  Scheduling a re-run of failed jobs has it&amp;rsquo;s own issues, and there are
+who-knows-how-many systems out there that can provide some kind of scheduling
+toolkit for you to use.  Aim for the automatic if possible, as it&amp;rsquo;s always
+faster for the system to retry for you than have you try to do it at 2AM or 3AM
+in the morning (these jobs never fail at 9AM or after your second cup of
+coffee).&lt;/p&gt;
+
+&lt;h2 id=&#34;late-delivery&#34;&gt;Late Delivery&lt;/h2&gt;
+
+&lt;p&gt;There&amp;rsquo;s really two forms of this error&amp;ndash;early and late delivery.  I have seldom
+seen a system that had a problem with early delivery, and if it happens, it
+usually just means the data isn&amp;rsquo;t completely available or full.  I would like to
+focus on Late Delivery, however, as that seems much more commonplace.&lt;/p&gt;
+
+&lt;p&gt;Late delivery can mean a lot of things for a system, such as not being able to
+send a shipment out on time, not getting bills paid within some kind of Service
+Level Guarantee, or even automatically kickstarting some backup or redundancy
+processes that will attempt to re-run your job or re-process things.&lt;/p&gt;
+
+&lt;p&gt;The difficulty in late- or long-running processes is knowing what will occur
+that way.  In a future post, I&amp;rsquo;ll prescribe some methods to identify and fix
+these issues.  For now, it&amp;rsquo;s important to just be aware of this situation when
+debugging or developing an integration/file transfer.&lt;/p&gt;
+
+&lt;h2 id=&#34;duplicate-entry&#34;&gt;Duplicate Entry&lt;/h2&gt;
+
+&lt;p&gt;Should you get in a vicious cycle of processing the same data over and over
+again, there&amp;rsquo;s&amp;ndash;at minimum&amp;ndash;the added load of having your systems process extra
+data without need.  Worse yet, if your data is naive enough to have data in the
+form of:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;--Add $20 to account X
+--Subtract $100 from account X
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and you re-process this data again and again, you&amp;rsquo;re going to have a bad day when
+someone calls in to say that they lost all their money, or &lt;strong&gt;nobody&lt;/strong&gt; calls in
+when they somehow accidentally got $$$$$&amp;rsquo;s of dollars without notice.&lt;/p&gt;
+
+&lt;p&gt;You need to build in some kind of tolerance for this, and hopefully that can be
+encoded in the file you&amp;rsquo;re processing.  The ideal goal should be to make
+re-processing&amp;ndash; at worst&amp;ndash;a wasted effort, and at best, no processing at all.
+That can&amp;rsquo;t always be the case, but it should be strived for.&lt;/p&gt;
+
+&lt;h1 id=&#34;verification-and-validation&#34;&gt;Verification and Validation&lt;/h1&gt;
+
+&lt;p&gt;What comes next is that when you get a file, you need to do both &lt;strong&gt;verify&lt;/strong&gt; that
+it is the file you need, and &lt;strong&gt;validate&lt;/strong&gt; that it can be properly parsed.&lt;/p&gt;
+
+&lt;h2 id=&#34;verification&#34;&gt;Verification&lt;/h2&gt;
+
+&lt;p&gt;Verification is the act of assuring that the file you&amp;rsquo;re looking at came from
+the person or system you expected it to.  In broad terms, you should encrypt
+files at rest, &lt;strong&gt;always&lt;/strong&gt;.  This isn&amp;rsquo;t going to cover everything, however,
+because while it may prevent a man-in-the-middle attacker from subverting and/or
+mucking with your system data, it doesn&amp;rsquo;t preclude a user from using a public
+key to drop something else they&amp;rsquo;d like you to process, which shouldn&amp;rsquo;t be
+processed at all.&lt;/p&gt;
+
+&lt;p&gt;If you choose to encrypt the file, you better be using some form of Digital
+Signature.  It&amp;rsquo;s about the only means you have to verify that the person that
+encrypted it was the person you wanted to get the file from.  I am not terribly
+strong on this front, so I don&amp;rsquo;t have a lot of details on this, but it&amp;rsquo;s
+something that&amp;rsquo;s getting a lot more attention with sites like
+&lt;a href=&#34;https://keybase.io&#34;&gt;Keybase.io&lt;/a&gt; and the general trend of using &lt;a href=&#34;https://github.com/blog/2144-gpg-signature-verification&#34;&gt;GPG-signed
+commits, a la, GitHub&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;validation&#34;&gt;Validation&lt;/h2&gt;
+
+&lt;p&gt;Finally, we get to the Validation portion of the file.  This is simply being
+able to parse the file out properly before you attempt to import it in to the
+system.  Many systems do this, and I don&amp;rsquo;t think this is a terribly difficult
+part of the process to handle.  That said, I would avoid doing any kind of
+transaction committal before processing the whole file.  The worst-case scenario
+here is that you find that the file format isn&amp;rsquo;t quite right, or that something
+is out of alignment (a huge issue with column-delimted or CSV data), so you will
+find yourself inserting the wrong columns into your system without proper
+validation.&lt;/p&gt;
+
+&lt;h1 id=&#34;summary&#34;&gt;Summary&lt;/h1&gt;
+
+&lt;p&gt;File transfer as a service is hard.  I don&amp;rsquo;t think it&amp;rsquo;s something that you can
+take for granted as being &amp;lsquo;just a &lt;code&gt;cron&lt;/code&gt; job&amp;rsquo;, as it&amp;rsquo;s way more complicated than
+that.  You will inevitably trip yourself up with any of these kinds of things.
+I wouldn&amp;rsquo;t say it&amp;rsquo;s less likely in the SOA or web services world, but the scope
+of the problem is way larger when you batch things up into a file.&lt;/p&gt;
+
+&lt;p&gt;Seldom is a file just one record or transaction.  If you are at the point that
+doing SOA or some kind of API development is an issue, you&amp;rsquo;ll find yourself
+inevitably bundling up as much as you can in that file, turning what would have
+been a bunch of service calls into one massive file for import.  Now your
+problem is compounded by having to not just be valid on the row or record-level,
+but valid at the entire boundary of the file.  What happens if it&amp;rsquo;s incorrect?
+Can you parse it out to find out where it broke?  How do you know the next file
+will be correct?  Is there a way to reproduce the issue?&lt;/p&gt;
+
+&lt;p&gt;I suggest that if you find yourself using file-based transfer systems a lot,
+you&amp;rsquo;re probably solving the wrong problem.  You need to look at what you&amp;rsquo;re
+taking in, how it&amp;rsquo;s being done, and just converting that into some kind of an
+ETL tool or SOA integration.  Doing much else is just a recipe for the problems
+above.  It&amp;rsquo;s bad enough that any of these would happen, let alone having to
+safeguard yourself from all of them at once.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Managed File Transfer Shenanigans</title>
+      <link>http://blog.nickklauer.info/2016/managed_file_transfer_shenanigans/</link>
+      <pubDate>Thu, 01 Sep 2016 18:20:48 -0500</pubDate>
+      
+      <guid>http://blog.nickklauer.info/2016/managed_file_transfer_shenanigans/</guid>
+      <description>
+
+&lt;p&gt;An approach in integrating two systems which I see pretty regularly is to take
+an old, or legacy file format and copy it over to another system.  The end goal
+being that you would write some kind of parser on the receiving end of this file
+to take and ingest that format in.&lt;/p&gt;
+
+&lt;p&gt;This is your Poor Man&amp;rsquo;s Service Oriented Architecture, where systems either
+don&amp;rsquo;t have integration endpoints, or the work to implement all of those are
+deemed too difficult and/or time consuming.  I don&amp;rsquo;t fault anyone for wanting to
+keep an old system alive (ROI is a powerful thing when it works), but having
+been thrown in this pit of non-web services&amp;rsquo; integration, you must be aware of
+several considerations.&lt;/p&gt;
+
+&lt;h1 id=&#34;timing-guarantees-missed-arrivals-late-deliveries-etc&#34;&gt;Timing Guarantees, Missed Arrivals, Late Deliveries, etc.&lt;/h1&gt;
+
+&lt;p&gt;If you implement any form of &lt;code&gt;cron&lt;/code&gt;-based scheduling, you need to keep a very
+clearly defined processes to handle contingencies in any of the following
+issues:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Failed Job Runs&lt;/li&gt;
+&lt;li&gt;Missed Delivery Timeframes&lt;/li&gt;
+&lt;li&gt;Late Delivery&lt;/li&gt;
+&lt;li&gt;Duplicate Delivery&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Any one of which can create mountains of trouble for you and your system.  How
+you go about verifying any of the above is somewhat dependent on the use-case of
+the system and the requirements that are being fulfilled.&lt;/p&gt;
+
+&lt;h2 id=&#34;failed-job-runs&#34;&gt;Failed Job Runs&lt;/h2&gt;
+
+&lt;p&gt;For failures, you&amp;rsquo;ll &lt;strong&gt;need&lt;/strong&gt; an alerting system to provide at least some
+guarantee that you&amp;rsquo;ll know when things need to be recovered or automatically
+retried.  Scheduling a re-run of failed jobs has it&amp;rsquo;s own issues, and there are
+who-knows-how-many systems out there that can provide some kind of scheduling
+toolkit for you to use.  Aim for the automatic if possible, as it&amp;rsquo;s always
+faster for the system to retry for you than have you try to do it at 2AM or 3AM
+in the morning (these jobs never fail at 9AM or after your second cup of
+coffee).&lt;/p&gt;
+
+&lt;h2 id=&#34;late-delivery&#34;&gt;Late Delivery&lt;/h2&gt;
+
+&lt;p&gt;There&amp;rsquo;s really two forms of this error&amp;ndash;early and late delivery.  I have seldom
+seen a system that had a problem with early delivery, and if it happens, it
+usually just means the data isn&amp;rsquo;t completely available or full.  I would like to
+focus on Late Delivery, however, as that seems much more commonplace.&lt;/p&gt;
+
+&lt;p&gt;Late delivery can mean a lot of things for a system, such as not being able to
+send a shipment out on time, not getting bills paid within some kind of Service
+Level Guarantee, or even automatically kickstarting some backup or redundancy
+processes that will attempt to re-run your job or re-process things.&lt;/p&gt;
+
+&lt;p&gt;The difficulty in late- or long-running processes is knowing what will occur
+that way.  In a future post, I&amp;rsquo;ll prescribe some methods to identify and fix
+these issues.  For now, it&amp;rsquo;s important to just be aware of this situation when
+debugging or developing an integration/file transfer.&lt;/p&gt;
+
+&lt;h2 id=&#34;duplicate-entry&#34;&gt;Duplicate Entry&lt;/h2&gt;
+
+&lt;p&gt;Should you get in a vicious cycle of processing the same data over and over
+again, there&amp;rsquo;s&amp;ndash;at minimum&amp;ndash;the added load of having your systems process extra
+data without need.  Worse yet, if your data is naive enough to have data in the
+form of:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;--Add $20 to account X
+--Subtract $100 from account X
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and you re-process this data again and again, you&amp;rsquo;re going to have a bad day when
+someone calls in to say that they lost all their money, or &lt;strong&gt;nobody&lt;/strong&gt; calls in
+when they somehow accidentally got $$$$$&amp;rsquo;s of dollars without notice.&lt;/p&gt;
+
+&lt;p&gt;You need to build in some kind of tolerance for this, and hopefully that can be
+encoded in the file you&amp;rsquo;re processing.  The ideal goal should be to make
+re-processing&amp;ndash; at worst&amp;ndash;a wasted effort, and at best, no processing at all.
+That can&amp;rsquo;t always be the case, but it should be strived for.&lt;/p&gt;
+
+&lt;h1 id=&#34;verification-and-validation&#34;&gt;Verification and Validation&lt;/h1&gt;
+
+&lt;p&gt;What comes next is that when you get a file, you need to do both &lt;strong&gt;verify&lt;/strong&gt; that
+it is the file you need, and &lt;strong&gt;validate&lt;/strong&gt; that it can be properly parsed.&lt;/p&gt;
+
+&lt;h2 id=&#34;verification&#34;&gt;Verification&lt;/h2&gt;
+
+&lt;p&gt;Verification is the act of assuring that the file you&amp;rsquo;re looking at came from
+the person or system you expected it to.  In broad terms, you should encrypt
+files at rest, &lt;strong&gt;always&lt;/strong&gt;.  This isn&amp;rsquo;t going to cover everything, however,
+because while it may prevent a man-in-the-middle attacker from subverting and/or
+mucking with your system data, it doesn&amp;rsquo;t preclude a user from using a public
+key to drop something else they&amp;rsquo;d like you to process, which shouldn&amp;rsquo;t be
+processed at all.&lt;/p&gt;
+
+&lt;p&gt;If you choose to encrypt the file, you better be using some form of Digital
+Signature.  It&amp;rsquo;s about the only means you have to verify that the person that
+encrypted it was the person you wanted to get the file from.  I am not terribly
+strong on this front, so I don&amp;rsquo;t have a lot of details on this, but it&amp;rsquo;s
+something that&amp;rsquo;s getting a lot more attention with sites like
+&lt;a href=&#34;https://keybase.io&#34;&gt;Keybase.io&lt;/a&gt; and the general trend of using &lt;a href=&#34;https://github.com/blog/2144-gpg-signature-verification&#34;&gt;GPG-signed
+commits, a la, GitHub&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;validation&#34;&gt;Validation&lt;/h2&gt;
+
+&lt;p&gt;Finally, we get to the Validation portion of the file.  This is simply being
+able to parse the file out properly before you attempt to import it in to the
+system.  Many systems do this, and I don&amp;rsquo;t think this is a terribly difficult
+part of the process to handle.  That said, I would avoid doing any kind of
+transaction committal before processing the whole file.  The worst-case scenario
+here is that you find that the file format isn&amp;rsquo;t quite right, or that something
+is out of alignment (a huge issue with column-delimted or CSV data), so you will
+find yourself inserting the wrong columns into your system without proper
+validation.&lt;/p&gt;
+
+&lt;h1 id=&#34;summary&#34;&gt;Summary&lt;/h1&gt;
+
+&lt;p&gt;File transfer as a service is hard.  I don&amp;rsquo;t think it&amp;rsquo;s something that you can
+take for granted as being &amp;lsquo;just a &lt;code&gt;cron&lt;/code&gt; job&amp;rsquo;, as it&amp;rsquo;s way more complicated than
+that.  You will inevitably trip yourself up with any of these kinds of things.
+I wouldn&amp;rsquo;t say it&amp;rsquo;s less likely in the SOA or web services world, but the scope
+of the problem is way larger when you batch things up into a file.&lt;/p&gt;
+
+&lt;p&gt;Seldom is a file just one record or transaction.  If you are at the point that
+doing SOA or some kind of API development is an issue, you&amp;rsquo;ll find yourself
+inevitably bundling up as much as you can in that file, turning what would have
+been a bunch of service calls into one massive file for import.  Now your
+problem is compounded by having to not just be valid on the row or record-level,
+but valid at the entire boundary of the file.  What happens if it&amp;rsquo;s incorrect?
+Can you parse it out to find out where it broke?  How do you know the next file
+will be correct?  Is there a way to reproduce the issue?&lt;/p&gt;
+
+&lt;p&gt;I suggest that if you find yourself using file-based transfer systems a lot,
+you&amp;rsquo;re probably solving the wrong problem.  You need to look at what you&amp;rsquo;re
+taking in, how it&amp;rsquo;s being done, and just converting that into some kind of an
+ETL tool or SOA integration.  Doing much else is just a recipe for the problems
+above.  It&amp;rsquo;s bad enough that any of these would happen, let alone having to
+safeguard yourself from all of them at once.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Adding Formatting and Parallelism</title>
