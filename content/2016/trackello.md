@@ -1,10 +1,8 @@
-+++
-date = "2016-07-01T20:31:12-04:00"
-slug = ""
-tags = ["", ""]
-title = "Trackello"
+---
+date: 2016-07-01T20:31:00
+title: Trackello
+---
 
-+++
 
 # Trello's API and Golang
 
