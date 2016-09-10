@@ -2,8 +2,11 @@ localhost:2015 {
     root public
     basicauth   /admin user pass
     log
-#    hugo        {
-#        styles  themes/klauern-hugo-zen
-#    }
+    hugo . {
+      flag buildDrafts
+      flag buildFuture
+      flag watch
+    }
+    errors errors.log
     tls         off
 }
