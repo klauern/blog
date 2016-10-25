@@ -98,41 +98,14 @@ above that I can try to cite.
 
 Anyways, here's the set of questions that would need to be answered:
 
-<table>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-<tr>
-<td>Title</td>
-<td>In five words or less, what would describe your idea?</td>
-</tr>
-<tr>
-<td>Description</td>
-<td>How would you describe this idea with someone who is not familiar with our business?</td>
-</tr>
-<tr>
-<td>Strategic Alignment</td>
-<td>How does this fit our company and industry?</td>
-</tr>
-<tr>
-<td>Target Market</td>
-<td>Who would be the target customer? What is the potential size of this market?</td>
-</tr>
-<tr>
-<td>Value Proposition</td>
-<td>How would this benefit our customers and company?</td>
-</tr>
-<tr>
-<td>Scope</td>
-<td>What would a pilot program look like? How could it look 5 years from now?</td>
-</tr>
-<tr>
-<td>Capabilities</td>
-<td>Would this require new capabilities, infrastructure or partnerships?</td>
-</tr>
-<tr>
-<td>Monetization</td>
-<td>How would we make money? Are there upfront costs?</td>
-</tr>
-</table>
+|               Field | Description                              |
+| ------------------: | :--------------------------------------- |
+|               Title | In five words or less, what would describe your idea? |
+|         Description | How would you describe this idea with someone who is not familiar with our business? |
+| Strategic Alignment | How does this fit our company and industry? |
+|       Target Market | Who would be the target customer? What is the potential size of this market? |
+|   Value Proposition | How would this benefit our customers and company? |
+|               Scope | What would a pilot program look like? How could it look 5 years from now? |
+|        Capabilities | Would this require new capabilities, infrastructure or partnerships? |
+|        Monetization | How would we make money? Are there upfront costs? |
+
