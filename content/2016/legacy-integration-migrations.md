@@ -12,7 +12,7 @@ draft = true
 
 # Migration Nightmares
 
-It appears almost expected that some system is going to be replaced by something newer and shinier than the last one, and you'll be expected to migrate everything you *just* got working on the old system, and port it or do whatever you need to do, in order to get it in to the **new** system.  I have a few opinions on the matter, so let's discuss how you can do that.
+I'm willing to be that there is an inevitable moment in any popular tool or framework's life that you are required to retire it in favor of the *new hotness*.  I have a few opinions on the matter, so let's discuss how you can do that.
 
 
 
