@@ -2,11 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://blog.nickklauer.info/</loc>
-    <lastmod>2016-09-01T18:20:48-05:00</lastmod>
-  </url>
-  
-  <url>
     <loc>http://blog.nickklauer.info/2016/managed_file_transfer_shenanigans/</loc>
     <lastmod>2016-09-01T18:20:48-05:00</lastmod>
   </url>
@@ -59,6 +54,53 @@
   <url>
     <loc>http://blog.nickklauer.info/2015/keystores-and-certificate-expiration/</loc>
     <lastmod>2015-10-15T20:02:18-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://blog.nickklauer.info/tags/</loc>
+    <lastmod>2016-09-01T18:20:48-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.nickklauer.info/2015/</loc>
+    <lastmod>2015-10-29T08:26:23-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.nickklauer.info/2016/</loc>
+    <lastmod>2016-09-01T18:20:48-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.nickklauer.info/</loc>
+    <lastmod>2016-09-01T18:20:48-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.nickklauer.info/tags/benefits/</loc>
+    <lastmod>2016-07-29T19:58:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.nickklauer.info/tags/java/</loc>
+    <lastmod>2016-06-29T19:47:15-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.nickklauer.info/tags/military/</loc>
+    <lastmod>2016-07-29T19:58:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://blog.nickklauer.info/tags/</loc>
+    <priority>0</priority>
   </url>
   
 </urlset>
