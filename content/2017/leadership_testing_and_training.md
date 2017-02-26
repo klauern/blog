@@ -1,8 +1,7 @@
 +++
-date = "2017-01-16T23:00:00-05:00"
+date = "2017-01-16T23:00:00"
 draft = true
 title = "Leadership - Testing and Training"
-
 +++
 
 This isn't the first time I've discussed leadership, but I feel it comes up
@@ -42,4 +41,5 @@ than simply *managing* them.
 
 ## Differences between Leadership and Management
 
-Leadership is simple, really
+Leadership is simple in concept, but extremely difficult in practice.  Simply put, it's
+easy to say you are leading by

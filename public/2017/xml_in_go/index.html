@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="/css/skeleton.css">
 <link rel="stylesheet" href="/css/custom.css">
 <link rel="alternate" href="/index.xml" type="application/rss+xml" title="A Blog">
-<title>Java - A Blog</title>
+<title>XML in Go - A Blog</title>
 </head>
 <body>
 
@@ -28,13 +28,20 @@
 
 
 	<main role="main">
-		<h1 class="list-title">Java</h1>
+		<article itemscope itemtype="http://schema.org/BlogPosting">
+			<h1 class="entry-title" itemprop="headline">XML in Go</h1>
+			<span class="entry-meta"><time itemprop="datePublished" datetime="2017-02-25">February 25, 2017</time></span>
+			<section itemprop="entry-text">
+				<p>Recently, I had a problem that I thought I could toy with [Go][go] to solve.  I support a number of software
+components written with a backend that heavily uses XML for definition data.  Most of these XML elements have
+familiar namespace values that you would likely see in a SOAP service, or anything that used more than
+your vanilla XML.</p>
 
-		<article itemscope itemtype="http://schema.org/Blog">
-			<h2 class="entry-title" itemprop="headline"><a href="/2016/jlinker-demo/">Java 9 Modularity Features</a></h2>
-			<span class="entry-meta"><time itemprop="datePublished" datetime="2016-06-29">June 29, 2016</time></span>
+<p>Now, while XML is not even close to a new language or data format, I assumed that parsing and digging in to
+XML would be pretty easy, relatively speaking.  Go has some pretty nifty ways to parse XML and JSON data</p>
+
+			</section>
 		</article>
-
 	</main>
 
 
