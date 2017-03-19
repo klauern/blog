@@ -10,7 +10,7 @@ public_folder: "/img/uploads"
 collections:
   - name: "blog" # used in routes, e.g. /admin/collections/blog
     label: "Blog Entries" # Used in the UI
-    folder: "content" # The path to the folder where the documents are stored
+    folder: "content/blog" # The path to the folder where the documents are stored
     create: true # Allow users to create new documents in this collection
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Filename template i.e. YYYY-MM-DD-title.md
     fields: # The fields for each document, usually in front matter
