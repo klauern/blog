@@ -1,6 +1,6 @@
 ---
 layout: blog
-draft: 'true'
+draft: 'false'
 title: Windows Subsystem for Linux
 date: 2017-04-19T00:05:23.510Z
 ---
@@ -66,5 +66,6 @@ apt-get install -y --force-yes ansible
 ## 6. Golang
 
 I have been coding in go in my spare time, and setting it up is pretty easy:
+
 
 
