@@ -1,5 +1,4 @@
 ---
-layout: blog
 draft: 'false'
 title: Arch Linux - Manual Package Installation
 date: 2017-04-19T13:52:03.578Z
