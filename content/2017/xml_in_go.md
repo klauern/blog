@@ -84,20 +84,14 @@ type DataWithAttrs struct {
 }
 
 func main() {
-
 	data := `<Person name="Bob" xsi:name="Jeff" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></Person>`
-
 	doc := &DataWithAttrs{}
-
 	err := xml.Unmarshal([]byte(data), &doc)
-
 	if err != nil {
 		fmt.Printf("error: %v", err)
 		return
 	}
-
 	fmt.Printf("data %+v", doc)
-
 }
 
 // error: main.DataWithAttrs field "Name" with tag "name,attr" conflicts with field "XsiName" with tag "http://www.w3.org/2001/XMLSchema-instance name,attr"
