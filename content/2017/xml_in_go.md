@@ -3,10 +3,10 @@ tags = ["xml","golang", "go"]
 slug = ""
 title = "XML in Go"
 date = "2017-04-25T22:11:11-06:00"
-draft = true
+draft = false
 +++
 
-# TODO: find links to missing tickets
+# Woes with XML and Go
 
 Recently, I had a problem that I thought I could toy with [Go][go] to solve.  I support a number of software components written with a backend that heavily uses XML for definition data.  Most of these XML elements have familiar namespace values that you would likely see in a SOAP service, or anything that used more than your vanilla XML.
 
@@ -68,9 +68,49 @@ conflicts with field "Attr_xsi_type" with tag
 "http://www.w3.org/2001/XMLSchema-instance type,attr" 
 ```
 
-I'm  not sure what the fix is for this, or how I could even rig Go's type system to comply with my somewhat convoluted demands.  I do have to say that I don't *like* the XML that I'm parsing, but such is the real world with legacy systems that you're often thrown only a SOAP-based format and expected to **deal with it**.  Unfortunately in my case, I don't see how I can do that, as it appears that the namespace between `Attr_type` and `Attr_xsi_type` are different, yet the same.
+Here's an even smaller example that shows what is going on here:
+
+```go
+package main
+
+import (
+	"encoding/xml"
+	"fmt"
+)
+
+type DataWithAttrs struct {
+	Name    string `xml:"name,attr"`
+	XsiName string `xml:"http://www.w3.org/2001/XMLSchema-instance name,attr"`
+}
+
+func main() {
+
+	data := `<Person name="Bob" xsi:name="Jeff" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></Person>`
+
+	doc := &DataWithAttrs{}
+
+	err := xml.Unmarshal([]byte(data), &doc)
+
+	if err != nil {
+		fmt.Printf("error: %v", err)
+		return
+	}
+
+	fmt.Printf("data %+v", doc)
+
+}
+
+// error: main.DataWithAttrs field "Name" with tag "name,attr" conflicts with field "XsiName" with tag "http://www.w3.org/2001/XMLSchema-instance name,attr"
+// Program exited.
+```
+
+Reference: https://play.golang.org/p/j8aIJtbwEm
+
+I'm  not sure what the fix is for this, or how I could even rig Go's type system to comply with my somewhat convoluted demands.  I do have to say that I don't *enjoy working with* the XML that I'm parsing, but such is the real world with legacy systems that you're often thrown only a SOAP-based format and expected to **deal with it**.  Unfortunately in my case, I don't see how I can do that, as it appears that the namespace between `Attr_type` and `Attr_xsi_type` are different, yet the same.
+
+Maybe if I have some time, I'll dig in to the `encoding/xml` package and figure out what could be done.  It seems pretty gnarly.
 
 
 
-[issue_board]: https://github.com/golang/go/issues#
+[issue_board]: https://github.com/golang/go/issues/13400	"encoding/xml: fix name spaces"
 [chidley]: https://github.com/gnewton/chidley
