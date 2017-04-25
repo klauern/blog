@@ -2,7 +2,7 @@
 tags = ["xml","golang", "go"]
 slug = ""
 title = "XML in Go"
-date = "2017-02-25T22:11:11-06:00"
+date = "2017-04-25T22:11:11-06:00"
 draft = true
 +++
 
@@ -30,7 +30,7 @@ type Author struct {
 }
 ```
 
-That is, these are  all reasonably effective in parsing vanilla XML.  Now, I work in an environment where XML never really left as a primary means of passing data around, and with it, people have been using every little bit of the schema to perform all sorts of things.  For instance, the multitude of WS-* specifications are only part of what I deal with.  The colliding namespaces (`xmlns:bob`, `xmlns:bob2`, etc., where unfortunately for me, they are different, despite sharing many fields) make working with XML in Go simply unworkable.
+That is, these are  all reasonably effective in parsing vanilla XML.  Now, I work in an environment where XML never really left as a primary means of passing data around, and with it, people have been using every little bit of the schema to perform all sorts of things.  For instance, the multitude of WS-\* specifications are only part of what I deal with.  The colliding namespaces (`xmlns:bob`, `xmlns:bob2`, etc., where unfortunately for me, they are different, despite sharing many fields) make working with XML in Go simply unworkable.
 
 This is not lost on the Go developers.  There are many tickets on the [Golang Issue board][issue_board] that explain that namespaces in XML just don't work that well or at all in some cases.  I've tried to reason out how Go would solve the issue of namespaces, and it just doesn't bode well.  The issue boils down to losing the underlying namespace types in the translation. 
 
