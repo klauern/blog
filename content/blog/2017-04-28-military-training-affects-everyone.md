@@ -19,3 +19,4 @@ Even better, when does the day end?  Well, not at 6PM, that's for sure!  You can
 Seriously, though, it's a lot better for a unit to allocate your time to serve this way, as you get more time to be a Soldier, and less time having to worry about where you packed your stuff for the next month.  It's also fun when you can skip a month or two (often, July and January are skipped at our units, simply because it's easier).
 
 
+
