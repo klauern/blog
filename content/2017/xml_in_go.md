@@ -1,10 +1,10 @@
-+++
-tags = ["xml","golang", "go"]
-slug = ""
-title = "XML in Go"
-date = "2017-04-25T22:11:11-06:00"
-draft = false
-+++
+---
+tags: ["xml", "golang", "go"]
+slug: ""
+title: "XML in Go"
+date: "2017-04-25T22:11:11-06:00"
+draft: false
+---
 
 # Woes with XML and Go
 
