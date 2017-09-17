@@ -19,9 +19,11 @@ First, let's download the `PKGBUILD` file manually.  This can be done with the `
 
 Next, download whatever sources you need to include and use.  Any files that are downloaded and referenced locally *relative to the `PKGBUILD` file*, and run the `makepkg` command.
 
-`makepkg`
+`makepkg -i`
 
-# Installing packages
+This one command both builds and installs the package for you.  Optionally, you can also specify the install step separately with
+
+`yaourt <pkgname.xz>`
 
 Finally, after the tool has made your packages, you can use `yaourt` to install them directly by just passing the `.xz` file in directly.
 
