@@ -2,7 +2,7 @@ baseurl = "http://blog.nickklauer.info/"
 languageCode = "en-us"
 pygmentsstyle = "native"
 pygmentsuseclasses = false
-theme = "klauern-hugo-zen"
+theme = "hugo-zen"
 title = "A Blog"
 
 [params]
