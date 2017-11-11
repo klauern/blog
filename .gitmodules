@@ -1,3 +1,3 @@
-[submodule "themes/klauern-hugo-zen"]
-	path = themes/klauern-hugo-zen
-	url = https://github.com/klauern/hugo-zen.git
+[submodule "themes/hugo-zen"]
+	path = themes/hugo-zen
+	url = https://github.com/rakuishi/hugo-zen.git
