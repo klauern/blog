@@ -1,1 +1,1 @@
-hugo server --buildDrafts --buildFuture --watch --theme=klauern-hugo-zen
+hugo server --buildDrafts --buildFuture --watch --theme=hugo-zen
