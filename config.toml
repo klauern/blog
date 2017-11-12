@@ -1,4 +1,4 @@
-baseurl = "http://blog.nickklauer.info/"
+baseurl = "https://blog.nickklauer.info/"
 languageCode = "en-us"
 pygmentsstyle = "native"
 pygmentsuseclasses = false
