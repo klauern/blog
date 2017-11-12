@@ -1,5 +1,4 @@
 ---
-layout: blog
 draft: 'false'
 title: DevOpsDays Madison 2017
 date: 2017-11-10T01:11:03.035Z

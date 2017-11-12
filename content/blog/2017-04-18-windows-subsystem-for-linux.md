@@ -1,5 +1,4 @@
 ---
-layout: blog
 draft: 'false'
 title: Windows Subsystem for Linux
 date: 2017-09-17T19:05:23-05:00
@@ -40,7 +39,7 @@ Bash on Windows Repo stubs
             vim-gtk \
             subversion \
             openjdk-7-jdk
-    
+
 
 ## 3. NodeJS
 

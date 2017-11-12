@@ -1,5 +1,4 @@
 ---
-layout: til
 draft: 'false'
 title: 'TIL: How to enable different collections in Netlify CMS'
 date: 2017-11-12T00:15:51.584Z
