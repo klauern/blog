@@ -1,10 +1,9 @@
 ---
-layout: blog
 draft: 'false'
 title: Military Training Affects Everyone
 date: 2017-04-29T01:45:04.335Z
 ---
-If you spend time with anyone in the National Guard or one of the various military branches in the Reserves, you may notice that they don't typify the sales pitch that we are told about part-time Reservist: "Serve your country one weekend a month, two weeks in a year".
+If you spend time with anyone in the National Guard or one of the various military branches in the Reserves, you may notice that they don't typify the sales pitch that we are oft-told regarding the 'part-time' Reservist: "Serve your country one weekend a month, two weeks in a year".
 
 Yeah, if only it were that simple.
 
