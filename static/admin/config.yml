@@ -1,6 +1,5 @@
 backend:
-  name: github
-  repo: klauern/blog
+  name: git-gateway
   branch: master
 
 publish_mode: editorial_workflow
@@ -21,6 +20,16 @@ collections:
   - name: "til" # today I learned
     label: "Today I Learned"
     folder: "content/til"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Filename template i.e. YYYY-MM-DD-title.md
+    fields: # The fields for each document, usually in front matter
+      - {label: "Is Draft?", name: "draft", widget: "string", default: "false"}
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
+      - {label: "Body", name: "body", widget: "markdown"}
+  - name: "book" # book reviews
+    label: "Book Reviews"
+    folder: "content/books"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Filename template i.e. YYYY-MM-DD-title.md
     fields: # The fields for each document, usually in front matter
