@@ -25,3 +25,18 @@
             {{ if eq $isHomePage true }}
             <h1 class="site-title">{{ .Site.Title }}</h1>{{ end }}
         </header>
+
+    </div>
+
+    <script>
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on("init", user => {
+                if (!user) {
+                    window.netlifyIdentity.on("login", () => {
+                        document.location.href = "/admin/";
+                    });
+                }
+            });
+        }
+    </script>
+</body>
