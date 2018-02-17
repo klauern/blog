@@ -40,7 +40,8 @@ footer {
 }
 
 main {
-    margin: 4rem 0;
+    margin: 4rem auto;
+    width: 800px;
 }
 
 li {
