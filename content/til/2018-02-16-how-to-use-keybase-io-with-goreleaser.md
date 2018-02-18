@@ -53,7 +53,7 @@ sign:
 
 As a point of reference, I was able to find the [command-line documentation for Keybase](https://keybase.io/docs/command_line) a welcome help:
 
->    ## Signing
+> ## Signing
 >    
 >    ```
 >    keybase sign -m "I hereby abdicate the throne"
