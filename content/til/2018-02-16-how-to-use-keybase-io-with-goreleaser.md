@@ -51,6 +51,16 @@ sign:
   artifacts: checksum
 ```
 
+As a point of reference, I was able to find the [command-line documentation for Keybase](https://keybase.io/docs/command_line) a welcome help:
+
+>    ## Signing
+>    
+>    ```
+>    keybase sign -m "I hereby abdicate the throne"
+>
+>    keybase sign -i foo.exe -b -o foo.exe.signed
+>    ```
+
 Which, when run on a recent release, will produce a release with a signed file for the checksum itself:
 
 ![trackello release v0.2.7](/img/uploads/screenshot from 2018-02-16 18-16-15.png)
