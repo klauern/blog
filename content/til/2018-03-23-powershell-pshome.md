@@ -1,11 +1,11 @@
 ---
-date: 2018-03-23T20:00:00.000Z
 draft: 'false'
 title: Configure a custom path for PowerShell Modules
+date: 2018-03-23T20:00:00.000Z
 ---
 At work, my laptop is configured to share it's `Documents` folder on a remote share for security reasons.  This is fine, but it does introduce a noticable delay in starting new PowerShell prompt.  To fix this, you can follow a link to "move" your Documents folder to another location, but that is if you have access to do that.  As my Documents folder is managed by my company's IT, it's hard-coded to a Universal Network Controller (UNC) share: `//some/server/path/here`
 
-However, all is not lost.  You can point or reconfigure where your modules are sourced from.  There is an environment variable called `$env:PSModulePath` which
+However, all is not lost.  You can repoint where your modules are sourced from.  There is an environment variable called `$env:PSModulePath` which
 stores the locations of modules that have.  From the documentation:
 
 > By default, the **PSModulePath** environment variable value contains the following system and user module directories, but you can add to and edit the value.
