@@ -1,12 +1,12 @@
 ---
-date: 2018-03-23T20:00:00.000Z
 draft: 'false'
 title: Configure a custom path for PowerShell Modules
+date: 2018-03-23T20:00:00.000Z
 ---
-At work, my laptop is configured to share it's `Documents` folder on a remote share for security reasons.  This is fine, but it does introduce a noticable delay in starting new PowerShell prompt.  To fix this, you can follow a link to "move" your Documents folder to another location, but that is if you have access to do that.  As my Documents folder is managed by my company's IT, it's hard-coded to a Universal Network Controller (UNC) share: `//some/server/path/here`
+At work, my laptop is configured to share it's `Documents` folder on a remote share (probably for ease of use in the network).  This is fine, but it does introduce a noticeable delay for starting every new PowerShell prompt.  To speed this up, you can follow a link to "move" your Documents folder to another location, but that is if you have access to do that.  As my Documents folder is managed by my company's IT, it's hard-coded to a Universal Network Controller (UNC) share: `//some/server/path/here`
 
-However, all is not lost.  You can point or reconfigure where your modules are sourced from.  There is an environment variable called `$env:PSModulePath` which
-stores the locations of modules that have.  From the documentation:
+However, all is not lost.  You can still re-point where your modules are sourced from.  There is an environment variable called `$env:PSModulePath` which
+stores the locations of modules that you have.  From the documentation:
 
 > By default, the **PSModulePath** environment variable value contains the following system and user module directories, but you can add to and edit the value.
 >
@@ -15,7 +15,7 @@ stores the locations of modules that have.  From the documentation:
 > * `$Env:ProgramFiles\WindowsPowerShell\Modules (%ProgramFiles%\WindowsPowerShell\Modules)`
 >
 
-Now, we can override this in our system environment variables, which will point it to a location of our choosing.
+We can override this in our system environment variables, which will point it to a location of our choosing.
 
     > [System.Environment]::SetEnvironmentVariable('PSModulePath', 'C:\tools\PowerShellModules\')
 
@@ -30,7 +30,7 @@ At C:\Program Files\WindowsPowerShell\Modules\PowerShellGet\1.0.0.1\PSModule.psm
     + FullyQualifiedErrorId : UnknownProviders,Microsoft.PowerShell.PackageManagement.Cmdlets.InstallPackage
 ```
 
-But, the fix is pretty simple.  You can use [`Save-Module`][2] to store it to a path, which will allow it to load successfully:
+But, again, there's another **simple** fix.  You can use [`Save-Module`][2] to store it to a path, which will allow it to load successfully Here's an example of saving the `posh-git` module to this location:
 
 ```
 Save-Module -Name posh-git -Path C:\tools\PowerShellModules\
