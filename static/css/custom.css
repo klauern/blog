@@ -1,6 +1,7 @@
 body {
-    font-family: "Ubuntu Mono", "Roboto Mono", "Consolas", Courier New, Courier, monospace;
+    font-family: "Roboto Mono", "Consolas", Courier New, Courier, monospace;
     background-color: #FCFCFC;
+    font-size: 1.25em;
 }
 
 h1 {
