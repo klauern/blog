@@ -3,8 +3,6 @@ draft: 'true'
 title: WSL - DrvFs is awesome
 date: '2018-11-30T00:00:00-06:00'
 ---
-![C:  /mnt/c  drvfs   rw,uid=1000,gid=1000,metadata,case=off,umask=22,fmask=111,relatime   0   0](/img/uploads/2018-11-09-18_51_48-select-klauer-klauerxps__home_klauer.png)
-
 Simply put, [DrvFs](https://blogs.msdn.microsoft.com/commandline/2018/01/12/chmod-chown-wsl-improvements/) is awesome.  This is a small tutorial on how to configure it.  We will make use of several components that Microsoft's dev team provided us:
 
 1. DrvFs with [chmod/chown WSL Improvements](https://blogs.msdn.microsoft.com/commandline/2018/01/12/chmod-chown-wsl-improvements/)
@@ -59,3 +57,5 @@ C:  /mnt/c  drvfs   rw,uid=1000,gid=1000,metadata,case=off,umask=22,fmask=111,re
 ```
 
 Now, whenever you start a new prompt, you can check your mount points and see all of the options pre-set for you:
+
+![C: /mnt/c drvfs rw,uid=1000,gid=1000,metadata,case=off,umask=22,fmask=111,relatime 0 0](/img/uploads/2018-11-09-18_51_48-select-klauer-klauerxps__home_klauer.png)
