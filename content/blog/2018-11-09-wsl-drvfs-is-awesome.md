@@ -27,7 +27,8 @@ To summarize what these options do:
 
 * `uid=1000,gid=1000` - set the default Group ID and User ID to match our user (in my case, the `klauer` user is `1000`, so we match that
 * `umask=22` - in most *nix distros, it's common to have the `umask` set to `022`, to prevent automatically setting everything as an **executable** program.  There's a great [StackOverflow Answer](https://askubuntu.com/questions/44542/what-is-umask-and-how-does-it-work#44548) that explains this better than I can, so I recommend you look there.
-* `fmask=111` - similar to `umask`
+* `fmask=111` - similar to `umask`, but for regular files
+* `metadata` - Reading from the [associated blog post][drvfs], this allows us to set metadata on Windows files, allowing us to apply `+x` perms, etc to it.
 
 
 [drvfs]: https://blogs.msdn.microsoft.com/commandline/2018/01/12/chmod-chown-wsl-improvements/
