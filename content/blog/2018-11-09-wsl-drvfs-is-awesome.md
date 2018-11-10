@@ -30,6 +30,35 @@ To summarize what these options do:
 * `fmask=111` - similar to `umask`, but for regular files
 * `metadata` - Reading from the [associated blog post][drvfs], this allows us to set metadata on Windows files, allowing us to apply `+x` perms, etc to it.
 
+# Always Setting Up with `/etc/fstab`
+
+Now, if you get around to playing with this, you might *like* using it, but find that typing `sudo umount` and `sudo mount` a chore, let's start by stubbing out a `wsl.conf` file:
+
+```ini
+#Let’s enable extra metadata options by default
+[automount]
+enabled = true
+root = /mnt/
+options = "metadata,uid=1000,gid=1000,umask=22,fmask=111"
+mountFsTab = true
+
+#Let’s enable DNS – even though these are turned on by default, we’ll specify here just to be explicit.
+[network]
+generateHosts = true
+generateResolvConf = true
+```
+
+I really didn't change much of anything here, but I do want to make sure that this is created in `/etc/wsl.conf` on your WSL distro as `root`.
+
+The final bit is adding this to your `/etc/fstab` file:
+
+```
+C:  /mnt/c  drvfs   rw,uid=1000,gid=1000,metadata,case=off,umask=22,fmask=111,relatime   0   0
+```
+
+Now, whenever you start a new prompt, you can check your mount points and see all of the options pre-set for you:
+
+
 
 [drvfs]: https://blogs.msdn.microsoft.com/commandline/2018/01/12/chmod-chown-wsl-improvements/
 [wslconf]: https://blogs.msdn.microsoft.com/commandline/2018/02/07/automatically-configuring-wsl/
