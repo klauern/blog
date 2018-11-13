@@ -1,7 +1,7 @@
 ---
 draft: 'true'
 title: WSL - DrvFs is awesome
-date: '2018-11-30T00:00:00-06:00'
+date: '2018-11-13T00:00:00-06:00'
 ---
 Simply put, [DrvFs](https://blogs.msdn.microsoft.com/commandline/2018/01/12/chmod-chown-wsl-improvements/) is awesome.  This is a small tutorial on how to configure it.  We will make use of several components that Microsoft's dev team provided us:
 
