@@ -7,4 +7,4 @@ What a great presentation!  This one should be viewed and internalized for any c
 
 [https://www.rundeck.com/self-service](https://www.rundeck.com/self-service)
 
-<iframe width="1519" height="594" src="https://www.youtube.com/embed/1zUtBLZ4Lus" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="800" height="450" src="https://www.youtube.com/embed/1zUtBLZ4Lus" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
