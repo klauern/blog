@@ -8,3 +8,5 @@ date: '2018-11-29T19:15:18-06:00'
 Whew, that was quite a ride!
 
 ![](https://api.accredible.com/v1/frontend/credential_website_embed_image/certificate/12216736)
+
+[https://credentials.docker.com/6tt2tdow](https://credentials.docker.com/6tt2tdow)
