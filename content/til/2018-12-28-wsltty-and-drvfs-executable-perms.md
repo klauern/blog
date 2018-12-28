@@ -5,9 +5,20 @@ date: '2018-12-28T07:06:06-06:00'
 ---
 I'm a big fan of [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/about).  I've been using it as my primary environment on my personal Windows laptop as well as receiving primary use on my work machines.  One of the newer features in recent builds of windows is support for a pseudo-filesystem called [DrvFs](https://blogs.msdn.microsoft.com/wsl/2017/04/18/file-system-improvements-to-the-windows-subsystem-for-linux/).  It allows more mount options, as well as a bigger set of controls over the way files look on the Windows side.
 
-One of the pet peeves with the way that WSL works is that you can easily navigate to shares outside of WSL within the `/mnt/c/` auto-mounted path.  This is fine, except all of the files would look 'wrong', insofar as the octal permissions assigned to them.  Here's an example:
+One of the pet peeves with the way that WSL works is that you can easily navigate to shares outside of WSL within the `/mnt/c/` auto-mounted path.  This is fine, except all of the files would look 'wrong', insofar as the octal permissions assigned to them.  
 
-<!-- insert screenshot of WSL drive -->
+```
+-rwxrwxrwx 1 klauer klauer   18451 Dec  5 11:17 cygwin-console-helper.exe
+-rwxrwxrwx 1 klauer klauer 3335398 Dec  5 11:17 cygwin1.dll
+-rwxrwxrwx 1 klauer klauer  100883 Dec  5 11:17 dash.exe
+-rwxrwxrwx 1 klauer klauer  626176 Dec  5 11:17 mintty.exe
+-rwxrwxrwx 1 klauer klauer   25107 Dec  5 11:17 regtool.exe
+-rwxrwxrwx 1 klauer klauer  150568 Dec  5 11:17 wslbridge-backend
+-rwxrwxrwx 1 klauer klauer  828416 Dec  5 11:17 wslbridge.exe
+-rwxrwxrwx 1 klauer klauer   89600 Dec  5 11:17 zoo.exe
+```
+
+Kinda ugly, because now everything is owned and operable by everyone...  WHile we are the only user on this system, it doesn't feel right, and the visuals don't look good in a colorized terminal, either.  Usually, `777` is flagged big and flashy because it's so out of place.
 
 To fix this, you can add a configuration to the `/etc/wsl.conf` that will let you define WSL-specific functionality, such as mount points and options passed in.  See [this blog post][2] for specifics around it.  In the example, the `options` field sets some file mask options, such as `fmask` and `umask`:
 
