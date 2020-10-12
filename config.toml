@@ -1,12 +1,11 @@
-baseurl = "https://blog.nickklauer.info/"
+baseurl = "https://blog.klauer.dev"
 languageCode = "en-us"
 pygmentsstyle = "native"
 pygmentsuseclasses = false
 pygmentsCodeFences = true
 theme = "hugo-zen"
 title = "A Blog"
-copyright = "2012 - 2018 Nick Klauer"
+copyright = "2012 - 2020 Nick Klauer"
 
 [params]
   logo = "https://s.gravatar.com/avatar/76c55292df5e9df9042eaf89ac35954b?s=80"
-
